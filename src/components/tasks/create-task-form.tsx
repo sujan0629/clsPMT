@@ -2,8 +2,8 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import type { UseFormReturn } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -15,7 +15,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Progress } from "@/components/ui/progress";
 
@@ -39,31 +38,30 @@ const formSchema = z.object({
   attachments: z.any().optional(),
 });
 
+type FormSchemaType = z.infer<typeof formSchema>;
+type FocusableField = 'title' | 'description' | 'attachments' | null;
+
+
 const projectOptions = projects.map(project => ({ value: project.id, label: project.name }));
 const userOptions = users.map(user => ({ value: user.id, label: user.name }));
 
-export function CreateTaskForm() {
+interface CreateTaskFormProps {
+    form: UseFormReturn<FormSchemaType>;
+    setFocusedField: (field: FocusableField) => void;
+}
+
+
+export function CreateTaskForm({ form, setFocusedField }: CreateTaskFormProps) {
     const router = useRouter();
     const { toast } = useToast();
     const [step, setStep] = useState(1);
     
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            title: "",
-            description: "",
-            subtasks: [],
-            assignees: [],
-            priority: "Medium",
-        },
-    });
-
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "subtasks",
     });
 
-    const triggerValidation = async (fields: (keyof z.infer<typeof formSchema>)[]) => {
+    const triggerValidation = async (fields: (keyof FormSchemaType)[]) => {
         return await form.trigger(fields, { shouldFocus: true });
     };
 
@@ -88,7 +86,7 @@ export function CreateTaskForm() {
 
     const prevStep = () => setStep(s => s - 1);
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: FormSchemaType) {
         console.log("Task Created:", values);
         toast({
             title: "Task Created!",
@@ -100,23 +98,18 @@ export function CreateTaskForm() {
     const progress = (step / 3) * 100;
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Create a New Task</CardTitle>
-                <CardDescription>Follow the steps to add a new task to a project.</CardDescription>
-                 <Progress value={progress} className="mt-2" />
-            </CardHeader>
+        <div className="space-y-8">
+            <Progress value={progress} className="mb-8" />
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <CardContent className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         {step === 1 && (
-                            <div className="space-y-4 animate-in fade-in-50">
-                                <h3 className="font-semibold">Step 1: Task Details</h3>
+                            <div className="space-y-6 animate-in fade-in-50">
+                                <h3 className="text-xl font-semibold">Step 1: Task Details</h3>
                                 <FormField
                                     control={form.control}
                                     name="projectId"
                                     render={({ field }) => (
-                                        <FormItem>
+                                        <FormItem onFocus={() => setFocusedField(null)}>
                                             <FormLabel>Project</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                 <FormControl>
@@ -136,7 +129,7 @@ export function CreateTaskForm() {
                                     control={form.control}
                                     name="title"
                                     render={({ field }) => (
-                                        <FormItem>
+                                        <FormItem onFocus={() => setFocusedField('title')}>
                                         <FormLabel>Task Title</FormLabel>
                                         <FormControl>
                                             <Input placeholder="e.g., Design the new user dashboard" {...field} />
@@ -149,10 +142,10 @@ export function CreateTaskForm() {
                                     control={form.control}
                                     name="description"
                                     render={({ field }) => (
-                                        <FormItem>
+                                        <FormItem onFocus={() => setFocusedField('description')}>
                                         <FormLabel>Description (Optional)</FormLabel>
                                         <FormControl>
-                                            <Textarea placeholder="Provide a detailed description of the task..." {...field} rows={4} />
+                                            <Textarea placeholder="Provide a detailed description of the task..." {...field} rows={6} />
                                         </FormControl>
                                         <FormMessage />
                                         </FormItem>
@@ -162,11 +155,11 @@ export function CreateTaskForm() {
                         )}
 
                         {step === 2 && (
-                            <div className="space-y-4 animate-in fade-in-50">
-                                <h3 className="font-semibold">Step 2: Add Subtasks (Optional)</h3>
+                            <div className="space-y-6 animate-in fade-in-50" onFocus={() => setFocusedField(null)}>
+                                <h3 className="text-xl font-semibold">Step 2: Add Subtasks (Optional)</h3>
                                 <div className="space-y-4">
                                     {fields.map((field, index) => (
-                                        <div key={field.id} className="flex flex-col gap-2 border p-4 rounded-md relative">
+                                        <div key={field.id} className="flex flex-col gap-2 border p-4 rounded-md relative bg-background/50">
                                             <FormField
                                                 control={form.control}
                                                 name={`subtasks.${index}.title`}
@@ -193,7 +186,7 @@ export function CreateTaskForm() {
                                                     </FormItem>
                                                 )}
                                             />
-                                            <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)} className="absolute top-2 right-2">
+                                            <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)} className="absolute top-1 right-1 text-muted-foreground hover:text-destructive">
                                                 <Trash2 className="h-4 w-4" />
                                             </Button>
                                         </div>
@@ -207,8 +200,8 @@ export function CreateTaskForm() {
                         )}
                         
                         {step === 3 && (
-                             <div className="space-y-4 animate-in fade-in-50">
-                                <h3 className="font-semibold">Step 3: Assignments & Deadlines</h3>
+                             <div className="space-y-6 animate-in fade-in-50" onFocus={() => setFocusedField(null)}>
+                                <h3 className="text-xl font-semibold">Step 3: Assignments & Deadlines</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                      <FormField
                                         control={form.control}
@@ -289,7 +282,7 @@ export function CreateTaskForm() {
                                         </FormItem>
                                     )}
                                 />
-                                <div>
+                                <div onFocus={() => setFocusedField('attachments')}>
                                     <FormLabel>Attachments (Optional)</FormLabel>
                                     <div className="mt-2 flex justify-center rounded-lg border border-dashed border-input px-6 py-10">
                                         <div className="text-center">
@@ -310,20 +303,17 @@ export function CreateTaskForm() {
                                 </div>
                             </div>
                         )}
-                    </CardContent>
-                    <CardFooter className="flex justify-between">
+                    <div className="flex justify-between pt-8">
                         <div>
-                            {step > 1 && <Button type="button" variant="ghost" onClick={prevStep}>Back</Button>}
+                            {step > 1 && <Button type="button" variant="outline" onClick={prevStep}>Back</Button>}
                         </div>
                         <div>
-                            {step < 3 && <Button type="button" onClick={nextStep}>Next</Button>}
+                            {step < 3 && <Button type="button" onClick={nextStep}>Next Step</Button>}
                             {step === 3 && <Button type="submit">Create Task</Button>}
                         </div>
-                    </CardFooter>
+                    </div>
                 </form>
             </Form>
-        </Card>
+        </div>
     );
 }
-
-    
