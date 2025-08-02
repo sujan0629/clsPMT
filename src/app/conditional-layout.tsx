@@ -12,5 +12,11 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
+  // Handle new project routes
+  if (pathname.startsWith('/projects/new')) {
+     return <AppShell>{children}</AppShell>;
+  }
+
+
   return <AppShell>{children}</AppShell>;
 }

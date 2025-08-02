@@ -1,3 +1,4 @@
+
 import type { Project } from "@/types";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -5,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: Project;
@@ -53,7 +55,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <p className="text-xs text-muted-foreground">Deadline</p>
             <p className="text-sm font-medium">{format(project.deadline, "MMM d, yyyy")}</p>
         </div>
-        <Button variant="secondary" size="sm">View Project</Button>
+        <Button asChild variant="secondary" size="sm">
+            <Link href={`/projects/${project.id}`}>View Project</Link>
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -1,7 +1,8 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { ConditionalLayout } from "@/components/conditional-layout";
+import { ConditionalLayout } from "./conditional-layout";
 
 export const metadata: Metadata = {
   title: "clsPMT™: Codelits Project Manager",
