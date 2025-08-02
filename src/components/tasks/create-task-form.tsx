@@ -29,7 +29,10 @@ const formSchema = z.object({
   projectId: z.string({ required_error: "Please select a project." }),
   title: z.string().min(3, "Task title must be at least 3 characters."),
   description: z.string().optional(),
-  subtasks: z.array(z.object({ title: z.string().min(1, "Subtask title cannot be empty.") })).optional(),
+  subtasks: z.array(z.object({ 
+      title: z.string().min(1, "Subtask title cannot be empty."),
+      description: z.string().optional(),
+    })).optional(),
   priority: z.enum(["Low", "Medium", "High"]),
   assignees: z.array(z.string()).min(1, "You must select at least one assignee."),
   dueDate: z.date({ required_error: "A due date is required."}),
@@ -70,11 +73,16 @@ export function CreateTaskForm() {
         if (step === 1) {
             isValid = await triggerValidation(["projectId", "title"]);
         } else if (step === 2) {
-            isValid = await triggerValidation(["subtasks"]);
+             isValid = await triggerValidation(["subtasks"]);
+        } else if (step === 3) {
+            isValid = await triggerValidation(["priority", "dueDate", "assignees"]);
         }
 
-        if (isValid) {
-            setStep(s => s + 1);
+
+        if (isValid || step === 2) { // Allow next from step 2 even if subtasks are empty
+            if (step < 3) {
+                setStep(s => s + 1);
+            }
         }
     };
 
@@ -156,14 +164,15 @@ export function CreateTaskForm() {
                         {step === 2 && (
                             <div className="space-y-4 animate-in fade-in-50">
                                 <h3 className="font-semibold">Step 2: Add Subtasks (Optional)</h3>
-                                <div className="space-y-3">
+                                <div className="space-y-4">
                                     {fields.map((field, index) => (
-                                        <div key={field.id} className="flex items-center gap-2">
+                                        <div key={field.id} className="flex flex-col gap-2 border p-4 rounded-md relative">
                                             <FormField
                                                 control={form.control}
                                                 name={`subtasks.${index}.title`}
                                                 render={({ field }) => (
-                                                     <FormItem className="flex-1">
+                                                     <FormItem>
+                                                        <FormLabel>Subtask Title</FormLabel>
                                                         <FormControl>
                                                             <Input placeholder={`Subtask ${index + 1}`} {...field} />
                                                         </FormControl>
@@ -171,13 +180,26 @@ export function CreateTaskForm() {
                                                     </FormItem>
                                                 )}
                                             />
-                                            <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)}>
+                                            <FormField
+                                                control={form.control}
+                                                name={`subtasks.${index}.description`}
+                                                render={({ field }) => (
+                                                     <FormItem>
+                                                        <FormLabel>Subtask Description (Optional)</FormLabel>
+                                                        <FormControl>
+                                                            <Textarea placeholder="Describe the subtask..." {...field} rows={2} />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)} className="absolute top-2 right-2">
                                                 <Trash2 className="h-4 w-4" />
                                             </Button>
                                         </div>
                                     ))}
                                 </div>
-                                <Button type="button" variant="outline" size="sm" onClick={() => append({ title: "" })}>
+                                <Button type="button" variant="outline" size="sm" onClick={() => append({ title: "", description: "" })}>
                                     <PlusCircle className="mr-2 h-4 w-4" />
                                     Add Subtask
                                 </Button>
@@ -303,3 +325,5 @@ export function CreateTaskForm() {
         </Card>
     );
 }
+
+    

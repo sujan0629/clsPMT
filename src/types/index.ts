@@ -1,3 +1,4 @@
+
 export type User = {
   id: string;
   name: string;
@@ -27,6 +28,7 @@ export type Subtask = {
   id: string;
   title: string;
   completed: boolean;
+  description?: string;
 };
 
 export type Task = {
@@ -64,3 +66,5 @@ export type Activity = {
     target: string;
     timestamp: Date;
 };
+
+    
