@@ -31,18 +31,14 @@ function useSidebar() {
 }
 
 export function Sidebar({ className, children }: { className?: string; children: React.ReactNode }) {
-  const { isOpen, setIsOpen } = useSidebar();
-  
   return (
     <>
       <div className={cn("hidden md:block", className)}>
         {children}
       </div>
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent side="left" className="p-0 w-[280px]">
-          {children}
-        </SheetContent>
-      </Sheet>
+      <SheetContent side="left" className="p-0 w-[280px]">
+        {children}
+      </SheetContent>
     </>
   );
 }
@@ -51,19 +47,20 @@ export const SidebarTrigger = React.forwardRef<HTMLButtonElement, Omit<ButtonPro
   ({ className, variant = "ghost", size = "icon", ...props }, ref) => {
     const { isOpen, setIsOpen } = useSidebar();
     return (
-      <SheetTrigger asChild>
-        <Button
-          ref={ref}
-          variant={variant}
-          size={size}
-          className={cn("md:hidden", className)}
-          onClick={() => setIsOpen(!isOpen)}
-          {...props}
-        >
-          {isOpen ? <X /> : <Menu />}
-          <span className="sr-only">Toggle Menu</span>
-        </Button>
-      </SheetTrigger>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild>
+          <Button
+            ref={ref}
+            variant={variant}
+            size={size}
+            className={cn("md:hidden", className)}
+            {...props}
+          >
+            <Menu />
+            <span className="sr-only">Toggle Menu</span>
+          </Button>
+        </SheetTrigger>
+      </Sheet>
     );
   }
 );
