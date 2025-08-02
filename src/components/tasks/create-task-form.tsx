@@ -67,8 +67,10 @@ export function CreateTaskForm({ form, setFocusedField }: CreateTaskFormProps) {
         let isValid = false;
         if (step === 1) {
             isValid = await triggerValidation(["projectId", "title"]);
+            if(isValid) setFocusedField('subtasks');
         } else if (step === 2) {
              isValid = await triggerValidation(["subtasks"]);
+             if(isValid) setFocusedField('priority');
         } else if (step === 3) {
             isValid = await triggerValidation(["priority", "dueDate", "assignees"]);
         }
@@ -81,7 +83,11 @@ export function CreateTaskForm({ form, setFocusedField }: CreateTaskFormProps) {
         }
     };
 
-    const prevStep = () => setStep(s => s - 1);
+    const prevStep = () => {
+        if (step === 3) setFocusedField('subtasks');
+        if (step === 2) setFocusedField('title');
+        setStep(s => s - 1);
+    }
 
     function onSubmit(values: FormSchemaType) {
         console.log("Task Created:", values);
