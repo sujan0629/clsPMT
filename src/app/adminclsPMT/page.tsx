@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
   const handleLogin = () => {
     if (username === 'adminclspmt' && password === 'fRuits123!') {
       setError('');
-      router.push('/dashboard');
+      router.push('/home');
     } else {
       setError('Invalid username or password.');
     }
