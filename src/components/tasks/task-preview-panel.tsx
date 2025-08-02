@@ -44,23 +44,23 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
     const getPreviewContent = () => {
         if (isEditing && (focusedField === 'title' || focusedField === 'description')) {
             return (
-                <div className="space-y-4">
+                <div className="flex flex-col h-full">
                     {focusedField === 'title' ? (
                         <Input 
                             value={editValue} 
                             onChange={(e) => setEditValue(e.target.value)}
-                            className="text-2xl font-bold h-auto p-0 border-0 focus-visible:ring-0 bg-transparent shadow-none"
+                            className="text-2xl font-bold h-auto p-0 border-0 focus-visible:ring-0 bg-transparent shadow-none flex-shrink-0"
                             autoFocus
                         />
                     ) : (
                         <Textarea 
                             value={editValue} 
                             onChange={(e) => setEditValue(e.target.value)}
-                            className="text-sm min-h-[200px] p-0 border-0 focus-visible:ring-0 bg-transparent shadow-none"
+                            className="text-sm p-0 border-0 focus-visible:ring-0 bg-transparent shadow-none flex-1"
                             autoFocus
                         />
                     )}
-                    <div className="flex justify-end gap-2">
+                    <div className="flex justify-end gap-2 mt-4 flex-shrink-0">
                         <Button variant="ghost" size="sm" onClick={handleCancel}><X className="mr-2 h-4 w-4"/>Cancel</Button>
                         <Button size="sm" onClick={handleSave}><Save className="mr-2 h-4 w-4"/>Save</Button>
                     </div>
@@ -171,9 +171,10 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
             )}
             <div className={cn(
                 "flex-1 bg-muted/30 border-2 border-dashed rounded-xl p-8",
-                 !header && "flex items-center justify-center"
+                 !header && "flex items-center justify-center",
+                 header && "flex flex-col items-start"
             )}>
-                <div className="w-full">
+                <div className="w-full h-full">
                    {getPreviewContent()}
                 </div>
             </div>
