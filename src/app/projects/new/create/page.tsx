@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, X } from "lucide-react";
 import Link from "next/link";
 import { MultiSelect } from "@/components/ui/multi-select";
+import Image from "next/image";
 
 
 const formSchema = z.object({
@@ -49,14 +49,13 @@ export default function CreateProjectFormPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background p-4 sm:p-6 lg:p-8">
-        <header className="flex items-center justify-between mb-8">
+        <header className="flex items-center justify-between mb-8 w-full max-w-5xl mx-auto">
             <Button variant="ghost" size="icon" asChild>
                 <Link href="/projects/new-project">
                     <ArrowLeft className="h-5 w-5" />
                     <span className="sr-only">Back</span>
                 </Link>
             </Button>
-            <h1 className="text-xl font-semibold">Create Project</h1>
             <Button variant="ghost" size="icon" asChild>
                 <Link href="/projects">
                      <X className="h-5 w-5" />
@@ -66,65 +65,71 @@ export default function CreateProjectFormPage() {
         </header>
 
         <main className="flex-1 flex items-center justify-center">
-            <div className="w-full max-w-md">
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <Card className="rounded-2xl">
-                             <CardHeader>
-                                <CardTitle>Project Details</CardTitle>
-                                <CardDescription>Fill in the details below to start your new project.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="p-6 space-y-4">
-                                <FormField
+            <div className="w-full max-w-5xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+                <div className="space-y-6">
+                    <div>
+                        <h1 className="text-3xl font-bold">Create a new project</h1>
+                        <p className="text-muted-foreground mt-2">Fill in the details below to get your project up and running.</p>
+                    </div>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                            <FormField
+                            control={form.control}
+                            name="projectName"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Project Name</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="e.g., Q4 Marketing Campaign" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+                            <FormField
+                            control={form.control}
+                            name="projectDescription"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Project Description</FormLabel>
+                                <FormControl>
+                                    <Textarea placeholder="A brief description of what this project is about." {...field} rows={3} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+                            <FormField
                                 control={form.control}
-                                name="projectName"
+                                name="team"
                                 render={({ field }) => (
                                     <FormItem>
-                                    <FormLabel>Project Name</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="e.g., Q4 Marketing Campaign" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
+                                        <FormLabel>Assign Team</FormLabel>
+                                        <MultiSelect
+                                            options={teamOptions}
+                                            selected={field.value}
+                                            onChange={field.onChange}
+                                            placeholder="Select team members..."
+                                            className="w-full"
+                                        />
+                                        <FormMessage />
                                     </FormItem>
                                 )}
-                                />
-                                <FormField
-                                control={form.control}
-                                name="projectDescription"
-                                render={({ field }) => (
-                                    <FormItem>
-                                    <FormLabel>Project Description</FormLabel>
-                                    <FormControl>
-                                        <Textarea placeholder="A brief description of what this project is about." {...field} rows={3} />
-                                    </FormControl>
-                                    <FormMessage />
-                                    </FormItem>
-                                )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="team"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Assign Team</FormLabel>
-                                            <MultiSelect
-                                                options={teamOptions}
-                                                selected={field.value}
-                                                onChange={field.onChange}
-                                                placeholder="Select team members..."
-                                                className="w-full"
-                                            />
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </CardContent>
-                            <CardFooter className="border-t px-6 py-4">
-                                <Button type="submit">Create Project</Button>
-                            </CardFooter>
-                        </Card>
-                    </form>
-                </Form>
+                            />
+                            <Button type="submit">Create Project</Button>
+                        </form>
+                    </Form>
+                </div>
+                 <div className="hidden lg:block">
+                    <Image 
+                        src="https://placehold.co/600x400.png"
+                        alt="A team collaborating on a project"
+                        width={600}
+                        height={400}
+                        className="rounded-lg shadow-2xl"
+                        data-ai-hint="team collaboration"
+                    />
+                </div>
             </div>
         </main>
     </div>
