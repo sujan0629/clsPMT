@@ -79,7 +79,7 @@ export function MainNav() {
                              <AccordionTrigger className={cn(
                                 "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
                                 pathname.startsWith(projectsPath) && "bg-accent text-primary font-semibold",
-                                "hover:no-underline"
+                                "hover:no-underline font-normal text-sm"
                             )}>
                                  <Link href={projectsPath} className="flex items-center gap-3">
                                     <FolderKanban className="h-5 w-5" />
