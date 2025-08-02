@@ -20,6 +20,9 @@ export default function AdminLoginPage() {
   const handleLogin = () => {
     if (username === 'adminclspmt' && password === 'fRuits123!') {
       setError('');
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('userRole', 'admin');
+      }
       router.push('/home');
     } else {
       setError('Invalid username or password.');
@@ -77,7 +80,7 @@ export default function AdminLoginPage() {
           <div className="mt-4 text-center text-sm">
             Not an admin?{" "}
             <Link href="/" className="underline">
-              Return to homepage
+              User Login
             </Link>
           </div>
         </div>

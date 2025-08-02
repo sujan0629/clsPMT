@@ -1,5 +1,6 @@
+
 "use client";
-import { Bell, Search, Shapes } from "lucide-react";
+import { Bell, LogOut, Search, Shapes } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,9 +15,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { users } from "@/lib/data";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function Header() {
   const currentUser = users[0];
+  const router = useRouter();
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('userRole');
+    }
+    router.push('/');
+  }
 
   return (
     <header className="flex h-16 items-center gap-4 border-b bg-card px-6 shrink-0">
@@ -98,8 +108,9 @@ export function Header() {
             <Link href="/settings">Settings</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="/">Log out</Link>
+          <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+            <LogOut className="mr-2 h-4 w-4" />
+            Log out
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

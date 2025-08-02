@@ -5,7 +5,7 @@ import { AppShell } from '@/components/app-shell';
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const noShellRoutes = ['/', '/signup', '/forgot-password', '/adminclsPMT'];
+  const noShellRoutes = ['/welcome', '/signup', '/forgot-password', '/adminclsPMT', '/'];
 
   // Exact match for the admin route, or any route starting with /auth/ for the invite flow
   if (noShellRoutes.includes(pathname) || pathname.startsWith('/auth/')) {

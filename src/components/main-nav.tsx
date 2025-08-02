@@ -23,7 +23,7 @@ export function MainNav() {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-16 items-center justify-center border-b px-4 shrink-0">
-        <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
+        <Link href="/home" className="flex items-center gap-2 font-semibold">
           <Shapes className="h-6 w-6 text-primary" />
           <span className="hidden lg:block">clsPMT™</span>
         </Link>
