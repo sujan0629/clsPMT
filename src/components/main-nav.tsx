@@ -23,9 +23,9 @@ export function MainNav() {
 
   const adminNavItems = [
       { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-      { href: "/admin/projects", label: "Projects", icon: FolderKanban },
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
+      { href: "/admin/projects", label: "Projects", icon: FolderKanban },
       { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot },
   ];
 
