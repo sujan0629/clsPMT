@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+import { projects } from "@/lib/data";
 import { useState, useEffect } from "react";
 
 
@@ -17,7 +19,7 @@ export function MainNav() {
     if (typeof window !== 'undefined') {
         setUserRole(sessionStorage.getItem('userRole'));
     }
-  }, []);
+  }, [pathname]); // Re-check on path change
 
   const isAdmin = userRole === 'admin';
 
@@ -25,14 +27,12 @@ export function MainNav() {
       { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
-      { href: "/admin/projects", label: "Projects", icon: FolderKanban },
       { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot },
   ];
 
   const userNavItems = [
       { href: "/user/home", label: "Home", icon: Home },
       { href: "/user/dashboard", label: "Dashboard", icon: LayoutDashboard },
-      { href: "/user/projects", label: "Projects", icon: FolderKanban },
       { href: "/user/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/user/calendar", label: "Calendar", icon: CalendarDays },
   ];
@@ -40,6 +40,7 @@ export function MainNav() {
   const navItems = isAdmin ? adminNavItems : userNavItems;
   const homePath = isAdmin ? '/admin/dashboard' : '/user/home';
   const settingsPath = isAdmin ? '/admin/settings' : '/user/settings';
+  const projectsPath = isAdmin ? '/admin/projects' : '/user/projects';
 
   return (
     <div className="flex h-full flex-col">
@@ -70,6 +71,40 @@ export function MainNav() {
                 </TooltipContent>
                 </Tooltip>
             ))}
+
+             <Accordion type="single" collapsible defaultValue={pathname.includes('/projects/') ? "projects" : ""} className="space-y-1">
+                <AccordionItem value="projects" className="border-b-0">
+                    <Tooltip delayDuration={0}>
+                        <TooltipTrigger asChild className="w-full">
+                             <AccordionTrigger className={cn(
+                                "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                                pathname.startsWith(projectsPath) && "bg-accent text-primary font-semibold",
+                                "hover:no-underline"
+                            )}>
+                                 <Link href={projectsPath} className="flex items-center gap-3">
+                                    <FolderKanban className="h-5 w-5" />
+                                    <span className="hidden lg:inline">Projects</span>
+                                 </Link>
+                             </AccordionTrigger>
+                        </TooltipTrigger>
+                         <TooltipContent side="right" className="block lg:hidden">
+                            <p>Projects</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <AccordionContent className="pl-8 pr-2 hidden lg:block">
+                        <nav className="grid gap-1 pt-1">
+                        {projects.map(project => (
+                             <Link key={project.id} href={`${projectsPath}/${project.id}`} className={cn(
+                                "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
+                                pathname === `${projectsPath}/${project.id}` && "bg-accent text-primary font-medium"
+                             )}>
+                                {project.name}
+                             </Link>
+                        ))}
+                        </nav>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
         </TooltipProvider>
       </nav>
       <div className="mt-auto p-4 border-t">
