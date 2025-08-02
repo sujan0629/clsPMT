@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,7 +32,7 @@ export default function ForgotPasswordPage() {
             <div className="mt-4 text-center text-sm">
               Remembered your password?{' '}
               <Link href="/" prefetch={false} className="underline">
-                Login
+                Return to Homepage
               </Link>
             </div>
           </CardContent>

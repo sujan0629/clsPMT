@@ -1,54 +1,86 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Shapes } from 'lucide-react';
+import { Shapes, CheckCircle, Users, BarChart2 } from 'lucide-react';
 
-export default function LoginPage() {
+export default function LandingPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
-      <main className="w-full max-w-sm mx-auto p-4">
-        <Card>
-          <CardHeader className="space-y-1 text-center">
-              <div className="flex justify-center items-center gap-2 mb-4">
-                  <Shapes className="h-8 w-8 text-primary" />
-                  <h1 className="text-2xl font-bold">clsPMT™</h1>
-              </div>
-            <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-            <CardDescription>Enter your email below to login to your account</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <Link href="/forgot-password" prefetch={false} className="ml-auto inline-block text-sm underline">
-                    Forgot your password?
-                  </Link>
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
+      <header className="px-4 lg:px-6 h-16 flex items-center border-b">
+        <Link href="/" className="flex items-center justify-center gap-2">
+          <Shapes className="h-6 w-6 text-primary" />
+          <span className="font-semibold text-xl">clsPMT™</span>
+        </Link>
+        <nav className="ml-auto flex gap-4 sm:gap-6">
+          <Link href="/adminclsPMT" className="text-sm font-medium hover:underline underline-offset-4">
+            Admin Login
+          </Link>
+        </nav>
+      </header>
+
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 text-center">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-1 lg:gap-12">
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="space-y-2">
+                  <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                    Streamline Your Workflow with clsPMT™
+                  </h1>
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto">
+                    The ultimate project management tool designed for elite teams. Manage tasks, projects, and collaboration seamlessly in one powerful, secure platform.
+                  </p>
                 </div>
-                <Input id="password" type="password" required />
+                <p className="text-sm text-muted-foreground">
+                    Access is currently by invitation only.
+                </p>
               </div>
-              <Button asChild type="submit" className="w-full">
-                <Link href="/dashboard">Login</Link>
-              </Button>
-              <Button variant="outline" className="w-full">
-                Login with Google
-              </Button>
             </div>
-            <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{' '}
-              <Link href="/signup" prefetch={false} className="underline">
-                Sign up
-              </Link>
+          </div>
+        </section>
+
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/20">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">Key Features</div>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Why Choose clsPMT™?</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Our platform is built with security and efficiency at its core, enabling your organization to achieve its goals faster.
+                </p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16 mt-12">
+              <div className="grid gap-2 text-center">
+                <CheckCircle className="h-10 w-10 mx-auto text-primary" />
+                <h3 className="text-lg font-bold">Task Management</h3>
+                <p className="text-sm text-muted-foreground">
+                  Organize, assign, and track tasks with our intuitive Kanban boards and detailed task views.
+                </p>
+              </div>
+              <div className="grid gap-2 text-center">
+                <Users className="h-10 w-10 mx-auto text-primary" />
+                <h3 className="text-lg font-bold">Secure Collaboration</h3>
+                <p className="text-sm text-muted-foreground">
+                  Invitation-only access ensures that only authorized personnel from approved domains can join your workspace.
+                </p>
+              </div>
+              <div className="grid gap-2 text-center">
+                <BarChart2 className="h-10 w-10 mx-auto text-primary" />
+                <h3 className="text-lg font-bold">Project Analytics</h3>
+                <p className="text-sm text-muted-foreground">
+                  Gain insights into your team's productivity and project progress with our comprehensive dashboards.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
+
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+        <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} Codelits. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
