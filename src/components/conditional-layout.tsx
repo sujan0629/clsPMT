@@ -4,7 +4,7 @@ import { AppShell } from '@/components/app-shell';
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const noShellRoutes = ['/', '/signup', '/forgot-password'];
+  const noShellRoutes = ['/', '/signup', '/forgot-password', '/adminclsPMT'];
 
   if (noShellRoutes.includes(pathname)) {
     return <>{children}</>;
