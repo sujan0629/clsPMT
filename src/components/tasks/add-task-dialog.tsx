@@ -21,6 +21,7 @@ import { Calendar } from "../ui/calendar"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { projects, users } from "@/lib/data"
+import Link from "next/link"
 
 export function AddTaskDialog({ children }: { children: React.ReactNode }) {
   const [date, setDate] = React.useState<Date>()
@@ -109,7 +110,7 @@ export function AddTaskDialog({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Create Task</Button>
+            <Button type="submit">Create Task</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,7 +18,6 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { MoreHorizontal, PlusCircle, Eye } from "lucide-react";
-import { AddTaskDialog } from "@/components/tasks/add-task-dialog";
 import { tasks, users } from "@/lib/data";
 import { format } from "date-fns";
 import type { Task } from "@/types";
@@ -89,12 +87,12 @@ export default function TasksPage() {
             <h1 className="text-3xl font-bold tracking-tight">Tasks Management</h1>
             <p className="text-muted-foreground mt-1">Oversee and manage all tasks assigned to your team.</p>
         </div>
-        <AddTaskDialog>
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Add Task
-          </Button>
-        </AddTaskDialog>
+        <Button asChild>
+            <Link href="/admin/tasks/new">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add Task
+            </Link>
+        </Button>
       </div>
       
       <div className="rounded-lg border">
