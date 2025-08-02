@@ -6,21 +6,23 @@ import Link from "next/link";
 
 export default function NewProjectPage() {
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-        <Card className="w-full max-w-md">
-            <CardHeader>
-                <CardTitle>Create a New Project</CardTitle>
-                <CardDescription>Get started by creating a project from scratch.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Link href="/projects/new/create" className="w-full">
-                    <Button className="w-full h-24 text-lg" variant="outline">
-                        <FilePlus2 className="mr-4 h-8 w-8" />
-                        Create from scratch
-                    </Button>
-                </Link>
-            </CardContent>
-        </Card>
+    <div className="flex flex-col min-h-screen bg-background items-center justify-center p-4">
+        <div className="w-full max-w-lg">
+            <Card className="rounded-xl">
+                <CardHeader className="text-center">
+                    <CardTitle>Create a New Project</CardTitle>
+                    <CardDescription>Get started by creating a project from scratch.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Link href="/projects/new/create" className="w-full">
+                        <Button className="w-full h-28 text-lg" variant="outline">
+                            <FilePlus2 className="mr-4 h-8 w-8" />
+                            Create from scratch
+                        </Button>
+                    </Link>
+                </CardContent>
+            </Card>
+        </div>
     </div>
   );
 }
