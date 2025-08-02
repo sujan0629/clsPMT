@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -31,36 +31,36 @@ function useSidebar() {
 }
 
 export function Sidebar({ className, children }: { className?: string; children: React.ReactNode }) {
+  const { isOpen, setIsOpen } = useSidebar();
   return (
     <>
       <div className={cn("hidden md:block", className)}>
         {children}
       </div>
-      <SheetContent side="left" className="p-0 w-[280px]">
-        {children}
-      </SheetContent>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetContent side="left" className="p-0 w-[280px]">
+          {children}
+        </SheetContent>
+      </Sheet>
     </>
   );
 }
 
 export const SidebarTrigger = React.forwardRef<HTMLButtonElement, Omit<ButtonProps, "children">>(
   ({ className, variant = "ghost", size = "icon", ...props }, ref) => {
-    const { isOpen, setIsOpen } = useSidebar();
+    const { setIsOpen } = useSidebar();
     return (
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <Button
+        <Button
             ref={ref}
             variant={variant}
             size={size}
             className={cn("md:hidden", className)}
+            onClick={() => setIsOpen(true)}
             {...props}
           >
             <Menu />
             <span className="sr-only">Toggle Menu</span>
-          </Button>
-        </SheetTrigger>
-      </Sheet>
+        </Button>
     );
   }
 );
