@@ -22,6 +22,7 @@ import { projects, users } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon, PlusCircle, Trash2, FileUp } from "lucide-react";
+import type { FocusableField, FormSchemaType } from "@/app/admin/tasks/new/page";
 
 
 const formSchema = z.object({
@@ -37,10 +38,6 @@ const formSchema = z.object({
   dueDate: z.date({ required_error: "A due date is required."}),
   attachments: z.any().optional(),
 });
-
-type FormSchemaType = z.infer<typeof formSchema>;
-type FocusableField = 'title' | 'description' | 'attachments' | null;
-
 
 const projectOptions = projects.map(project => ({ value: project.id, label: project.name }));
 const userOptions = users.map(user => ({ value: user.id, label: user.name }));
@@ -155,7 +152,7 @@ export function CreateTaskForm({ form, setFocusedField }: CreateTaskFormProps) {
                         )}
 
                         {step === 2 && (
-                            <div className="space-y-6 animate-in fade-in-50" onFocus={() => setFocusedField(null)}>
+                            <div className="space-y-6 animate-in fade-in-50" onFocus={() => setFocusedField('subtasks')}>
                                 <h3 className="text-xl font-semibold">Step 2: Add Subtasks (Optional)</h3>
                                 <div className="space-y-4">
                                     {fields.map((field, index) => (
@@ -200,14 +197,14 @@ export function CreateTaskForm({ form, setFocusedField }: CreateTaskFormProps) {
                         )}
                         
                         {step === 3 && (
-                             <div className="space-y-6 animate-in fade-in-50" onFocus={() => setFocusedField(null)}>
+                             <div className="space-y-6 animate-in fade-in-50">
                                 <h3 className="text-xl font-semibold">Step 3: Assignments & Deadlines</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                      <FormField
                                         control={form.control}
                                         name="priority"
                                         render={({ field }) => (
-                                            <FormItem>
+                                            <FormItem onFocus={() => setFocusedField('priority')}>
                                                 <FormLabel>Priority</FormLabel>
                                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                     <FormControl>
@@ -229,7 +226,7 @@ export function CreateTaskForm({ form, setFocusedField }: CreateTaskFormProps) {
                                         control={form.control}
                                         name="dueDate"
                                         render={({ field }) => (
-                                            <FormItem className="flex flex-col">
+                                            <FormItem className="flex flex-col" onFocus={() => setFocusedField('dueDate')}>
                                             <FormLabel>Due Date</FormLabel>
                                             <Popover>
                                                 <PopoverTrigger asChild>
@@ -269,7 +266,7 @@ export function CreateTaskForm({ form, setFocusedField }: CreateTaskFormProps) {
                                     control={form.control}
                                     name="assignees"
                                     render={({ field }) => (
-                                        <FormItem>
+                                        <FormItem onFocus={() => setFocusedField('assignees')}>
                                             <FormLabel>Assign to</FormLabel>
                                             <MultiSelect
                                                 options={userOptions}

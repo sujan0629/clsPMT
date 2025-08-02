@@ -27,7 +27,7 @@ const formSchema = z.object({
 });
 
 export type FormSchemaType = z.infer<typeof formSchema>;
-export type FocusableField = 'title' | 'description' | 'attachments' | null;
+export type FocusableField = 'title' | 'description' | 'subtasks' | 'priority' | 'dueDate' | 'assignees' | 'attachments' | null;
 
 export default function CreateTaskPage() {
     const [focusedField, setFocusedField] = useState<FocusableField>(null);

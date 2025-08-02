@@ -6,9 +6,13 @@ import type { UseFormReturn } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { BookText, FileText, Type, Pencil, Save, X } from "lucide-react";
+import { BookText, FileText, Type, Pencil, Save, X, Users, Calendar, Shield, ListTodo, Paperclip } from "lucide-react";
 import type { FormSchemaType, FocusableField } from '@/app/admin/tasks/new/page';
 import { cn } from '@/lib/utils';
+import { users } from '@/lib/data';
+import { format } from 'date-fns';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Badge } from '../ui/badge';
 
 interface TaskPreviewPanelProps {
     focusedField: FocusableField;
@@ -66,15 +70,61 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
 
         switch (focusedField) {
             case 'title':
-                return <p className="text-2xl font-bold break-words">{formData.title || '...'}</p>;
+                return <p className="text-2xl font-bold break-words">{formData.title || 'Task title will appear here...'}</p>;
             case 'description':
                 return <p className="text-sm break-words whitespace-pre-wrap">{formData.description || 'Start typing a description...'}</p>;
+            case 'subtasks':
+                 return (
+                    <div className="space-y-3">
+                        {formData.subtasks && formData.subtasks.length > 0 ? (
+                            formData.subtasks.map((subtask, index) => (
+                                <div key={index} className="flex flex-col p-3 bg-background/50 rounded-md border">
+                                    <p className="font-semibold">{subtask.title || `Subtask ${index + 1}`}</p>
+                                    <p className="text-sm text-muted-foreground">{subtask.description || 'No description'}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-sm text-muted-foreground">No subtasks added yet.</p>
+                        )}
+                    </div>
+                );
+            case 'priority':
+            case 'dueDate':
+            case 'assignees':
+                const selectedAssignees = formData.assignees 
+                    ? users.filter(u => formData.assignees?.includes(u.id))
+                    : [];
+                return (
+                     <div className="space-y-4 text-sm">
+                        {formData.priority && <div><span className="font-semibold">Priority: </span><Badge>{formData.priority}</Badge></div>}
+                        {formData.dueDate && <div><span className="font-semibold">Due Date: </span>{format(formData.dueDate, "PPP")}</div>}
+                        {selectedAssignees.length > 0 && (
+                            <div>
+                                <p className="font-semibold mb-2">Assignees:</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {selectedAssignees.map(user => (
+                                        <div key={user.id} className="flex items-center gap-2 p-2 bg-background rounded-md border">
+                                            <Avatar className="h-6 w-6">
+                                                <AvatarImage src={user.avatarUrl} alt={user.name} />
+                                                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                            </Avatar>
+                                            <span className="text-xs">{user.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                     </div>
+                );
+            case 'attachments':
+                 return <p className="text-sm text-muted-foreground">Your attachments will be shown here.</p>;
+
             default:
                 return (
                     <div className="text-center text-muted-foreground space-y-3">
                         <BookText className="h-12 w-12 mx-auto" />
                         <h3 className="text-lg font-semibold">Live Preview</h3>
-                        <p className="text-sm">Click on a field like 'Title' or 'Description' to see a live preview of your content here.</p>
+                        <p className="text-sm">Click on a field to see a live preview of your content here.</p>
                     </div>
                 );
         }
@@ -86,12 +136,23 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
                 return { icon: Type, title: "Task Title Preview" };
             case 'description':
                 return { icon: FileText, title: "Description Preview" };
+            case 'subtasks':
+                return { icon: ListTodo, title: "Subtasks Preview" };
+            case 'priority':
+                return { icon: Shield, title: "Priority Preview" };
+            case 'dueDate':
+                return { icon: Calendar, title: "Due Date Preview" };
+            case 'assignees':
+                return { icon: Users, title: "Assignees Preview" };
+            case 'attachments':
+                return { icon: Paperclip, title: "Attachments Preview" };
             default:
                 return null;
         }
     };
 
     const header = getPreviewHeader();
+    const canBeEdited = focusedField === 'title' || focusedField === 'description';
 
     return (
         <div className="flex flex-col h-full">
@@ -101,7 +162,7 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
                         <header.icon className="h-5 w-5" />
                         <h3 className="text-lg font-semibold">{header.title}</h3>
                     </div>
-                    {!isEditing && (
+                    {!isEditing && canBeEdited && (
                          <Button variant="outline" size="sm" onClick={handleEditClick}>
                             <Pencil className="mr-2 h-4 w-4"/> Edit
                         </Button>
