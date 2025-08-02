@@ -18,12 +18,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, PlusCircle } from "lucide-react";
+import { MoreHorizontal, PlusCircle, Eye } from "lucide-react";
 import { AddTaskDialog } from "@/components/tasks/add-task-dialog";
 import { tasks, users } from "@/lib/data";
 import { format } from "date-fns";
 import type { Task } from "@/types";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const priorityVariant: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
   Low: "secondary",
@@ -69,10 +71,16 @@ const UserTaskRow = ({ task }: { task: Task }) => (
 
 
 export default function TasksPage() {
+  const router = useRouter();
   const usersWithTasks = users.map(user => ({
     ...user,
     tasks: tasks.filter(task => task.assignees.some(a => a.id === user.id)),
   }));
+
+  const handleViewUserTasks = (event: React.MouseEvent, userId: string) => {
+    event.stopPropagation();
+    router.push(`/admin/tasks/${userId}`);
+  };
 
   return (
     <div className="flex flex-col h-full gap-8">
@@ -94,15 +102,21 @@ export default function TasksPage() {
             {usersWithTasks.map(user => user.tasks.length > 0 && (
                 <AccordionItem value={user.id} key={user.id}>
                     <AccordionTrigger className="px-4 hover:no-underline">
-                        <div className="flex items-center gap-3">
-                            <Avatar className="h-9 w-9">
-                                <AvatarImage src={user.avatarUrl} alt={user.name} />
-                                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <div className="text-left">
-                                <p className="font-semibold">{user.name}</p>
-                                <p className="text-sm text-muted-foreground">{user.tasks.length} task(s) assigned</p>
+                        <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center gap-3">
+                                <Avatar className="h-9 w-9">
+                                    <AvatarImage src={user.avatarUrl} alt={user.name} />
+                                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <div className="text-left">
+                                    <p className="font-semibold">{user.name}</p>
+                                    <p className="text-sm text-muted-foreground">{user.tasks.length} task(s) assigned</p>
+                                </div>
                             </div>
+                            <Button variant="ghost" size="sm" onClick={(e) => handleViewUserTasks(e, user.id)}>
+                                <Eye className="mr-2 h-4 w-4" />
+                                View Board
+                            </Button>
                         </div>
                     </AccordionTrigger>
                     <AccordionContent>
