@@ -66,10 +66,10 @@ export default function CreateProjectFormPage() {
         </header>
 
         <main className="flex-1 flex items-center justify-center">
-            <div className="w-full max-w-lg">
+            <div className="w-full max-w-md">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <Card className="rounded-xl">
+                        <Card className="rounded-2xl">
                              <CardHeader>
                                 <CardTitle>Project Details</CardTitle>
                                 <CardDescription>Fill in the details below to start your new project.</CardDescription>
