@@ -8,7 +8,7 @@ import { TasksChart } from "@/components/dashboard/tasks-chart";
 import { MyTasks } from "@/components/dashboard/my-tasks";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { tasks, users } from '@/lib/data';
+import { tasks, users, projects } from '@/lib/data';
 
 export default function DashboardPage() {
   const [userRole, setUserRole] = useState<string | null>(null);
