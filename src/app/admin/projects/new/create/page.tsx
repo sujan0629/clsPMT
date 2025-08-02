@@ -44,20 +44,20 @@ export default function CreateProjectFormPage() {
         title: "Project Created!",
         description: `The project "${values.projectName}" has been successfully created.`,
     });
-    router.push("/projects");
+    router.push("/admin/projects");
   }
 
   return (
     <div className="flex flex-col min-h-screen bg-background p-4 sm:p-6 lg:p-8">
         <header className="flex items-center justify-between mb-8 w-full max-w-5xl mx-auto">
             <Button variant="ghost" size="icon" asChild>
-                <Link href="/projects/new-project">
+                <Link href="/admin/projects/new-project">
                     <ArrowLeft className="h-5 w-5" />
                     <span className="sr-only">Back</span>
                 </Link>
             </Button>
             <Button variant="ghost" size="icon" asChild>
-                <Link href="/projects">
+                <Link href="/admin/projects">
                      <X className="h-5 w-5" />
                      <span className="sr-only">Close</span>
                 </Link>

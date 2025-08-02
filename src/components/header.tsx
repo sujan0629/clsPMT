@@ -15,11 +15,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { users } from "@/lib/data";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export function Header() {
   const currentUser = users[0];
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isAdmin = pathname.startsWith('/admin');
+  const homePath = isAdmin ? '/admin/dashboard' : '/user/home';
+
 
   const handleLogout = () => {
     if (typeof window !== 'undefined') {
@@ -32,7 +37,7 @@ export function Header() {
     <header className="flex h-16 items-center gap-4 border-b bg-card px-6 shrink-0">
       <div className="flex items-center gap-4 md:hidden">
         <SidebarTrigger />
-        <Link href="/dashboard" className="flex items-center gap-2 font-semibold md:hidden">
+        <Link href={homePath} className="flex items-center gap-2 font-semibold md:hidden">
           <Shapes className="h-6 w-6 text-primary" />
           <span className="sr-only">clsPMT™</span>
         </Link>

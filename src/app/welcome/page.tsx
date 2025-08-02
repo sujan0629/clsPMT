@@ -16,7 +16,7 @@ export default function LandingPage() {
            <Link href="/" className="text-sm font-medium hover:underline underline-offset-4">
             User Login
           </Link>
-          <Link href="/adminclsPMT" className="text-sm font-medium hover:underline underline-offset-4">
+          <Link href="/admin/login" className="text-sm font-medium hover:underline underline-offset-4">
             Admin Login
           </Link>
         </nav>

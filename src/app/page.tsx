@@ -23,7 +23,7 @@ export default function UserLoginPage() {
       if (typeof window !== 'undefined') {
         sessionStorage.setItem('userRole', 'user');
       }
-      router.push('/home');
+      router.push('/user/home');
     } else {
       setError('Invalid username or password.');
     }
@@ -95,7 +95,7 @@ export default function UserLoginPage() {
           </div>
           <div className="mt-4 text-center text-sm">
             Are you an administrator?{" "}
-            <Link href="/adminclsPMT" className="underline">
+            <Link href="/admin/login" className="underline">
               Admin Login
             </Link>
           </div>

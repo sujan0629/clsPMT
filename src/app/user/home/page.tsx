@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { users, projects } from "@/lib/data";
@@ -88,7 +87,7 @@ export default function HomePage() {
                         <CardHeader className="flex flex-row items-center justify-between">
                             <CardTitle>Projects</CardTitle>
                             <Button variant="ghost" size="sm" asChild>
-                                <Link href="/projects">
+                                <Link href="/user/projects">
                                     View All <ChevronRight className="ml-1 h-4 w-4" />
                                 </Link>
                             </Button>
@@ -108,13 +107,6 @@ export default function HomePage() {
                                    <p className="text-sm text-muted-foreground">{project.progress}%</p>
                                </div>
                            ))}
-                           <Separator />
-                           <Button variant="outline" className="w-full" asChild>
-                               <Link href="/projects/new-project">
-                                <PlusCircle className="mr-2 h-4 w-4" />
-                                Create Project
-                               </Link>
-                           </Button>
                         </CardContent>
                     </Card>
                 </div>
