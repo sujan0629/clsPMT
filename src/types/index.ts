@@ -40,6 +40,7 @@ export type Task = {
   assignees: User[];
   dueDate: Date;
   startDate?: Date;
+  createdAt: Date;
   subtasks: Subtask[];
   comments: Comment[];
   attachments: Attachment[];

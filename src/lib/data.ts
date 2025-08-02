@@ -1,3 +1,4 @@
+
 import type { User, Project, Task, Activity } from "@/types";
 
 export const users: User[] = [
@@ -46,6 +47,7 @@ export const tasks: Task[] = [
     priority: "High",
     assignees: [users[2]],
     dueDate: new Date("2024-09-30"),
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
     subtasks: [
       { id: "sub-1-1", title: "Wireframing", completed: true },
       { id: "sub-1-2", title: "Visual design", completed: false },
@@ -63,6 +65,7 @@ export const tasks: Task[] = [
     priority: "High",
     assignees: [users[3]],
     dueDate: new Date("2024-10-15"),
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
     subtasks: [],
     comments: [],
     attachments: [],
@@ -76,6 +79,7 @@ export const tasks: Task[] = [
     priority: "Medium",
     assignees: [users[1]],
     dueDate: new Date("2024-09-10"),
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 days ago
     subtasks: [],
     comments: [],
     attachments: [],
@@ -89,6 +93,7 @@ export const tasks: Task[] = [
     priority: "Medium",
     assignees: [users[0]],
     dueDate: new Date("2024-09-25"),
+    createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), // 4 days ago
     subtasks: [],
     comments: [],
     attachments: [],
@@ -102,6 +107,7 @@ export const tasks: Task[] = [
     priority: "High",
     assignees: [users[2], users[3]],
     dueDate: new Date("2024-11-01"),
+    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000), // 8 days ago
     subtasks: [],
     comments: [],
     attachments: [],
@@ -115,6 +121,7 @@ export const tasks: Task[] = [
     priority: "Medium",
     assignees: [users[3]],
     dueDate: new Date("2024-11-10"),
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
     subtasks: [],
     comments: [],
     attachments: [],
@@ -128,6 +135,7 @@ export const tasks: Task[] = [
     priority: "Low",
     assignees: [users[0]],
     dueDate: new Date("2024-09-01"),
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), // 15 days ago
     subtasks: [],
     comments: [],
     attachments: [],
@@ -141,6 +149,7 @@ export const tasks: Task[] = [
     priority: "Low",
     assignees: [users[1]],
     dueDate: new Date("2024-12-01"),
+    createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000), // 6 days ago
     subtasks: [],
     comments: [],
     attachments: [],

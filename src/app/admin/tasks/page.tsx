@@ -25,6 +25,7 @@ import type { Task } from "@/types";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { RecentlyAssignedTasks } from "@/components/tasks/recently-assigned-tasks";
 
 const priorityVariant: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
   Low: "secondary",
@@ -110,6 +111,8 @@ export default function TasksPage() {
             </Link>
         </Button>
       </div>
+
+      <RecentlyAssignedTasks />
       
       <div className="rounded-lg border">
         <Accordion type="multiple" className="w-full">
