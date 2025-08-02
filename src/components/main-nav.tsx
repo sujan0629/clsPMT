@@ -6,8 +6,6 @@ import { usePathname } from "next/navigation";
 import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
-import { projects } from "@/lib/data";
 import { useState, useEffect } from "react";
 
 
@@ -41,7 +39,6 @@ export function MainNav() {
 
   const navItems = isAdmin ? adminNavItems : userNavItems;
   const homePath = isAdmin ? '/admin/dashboard' : '/user/home';
-  const projectsPath = isAdmin ? '/admin/projects' : '/user/projects';
   const settingsPath = isAdmin ? '/admin/settings' : '/user/settings';
 
   return (
@@ -61,7 +58,7 @@ export function MainNav() {
                     href={item.href}
                     className={cn(
                         "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                        pathname.startsWith(item.href) && item.href !== projectsPath && "bg-accent text-primary font-semibold"
+                        pathname.startsWith(item.href) && "bg-accent text-primary font-semibold"
                     )}
                     >
                     <item.icon className="h-5 w-5" />
@@ -73,42 +70,6 @@ export function MainNav() {
                 </TooltipContent>
                 </Tooltip>
             ))}
-
-             {isAdmin && (
-                 <Accordion type="single" collapsible defaultValue="projects" className="space-y-1">
-                    <AccordionItem value="projects" className="border-b-0">
-                        <Tooltip delayDuration={0}>
-                            <TooltipTrigger asChild className="w-full">
-                                <AccordionTrigger className={cn(
-                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                                    pathname.startsWith("/admin/projects") && "bg-accent text-primary font-semibold",
-                                    "hover:no-underline"
-                                )}>
-                                    <Link href={projectsPath} className="flex items-center gap-3">
-                                        <FolderKanban className="h-5 w-5" />
-                                        <span className="hidden lg:inline">Projects</span>
-                                    </Link>
-                                </AccordionTrigger>
-                            </TooltipTrigger>
-                            <TooltipContent side="right" className="block lg:hidden">
-                                <p>Projects</p>
-                            </TooltipContent>
-                        </Tooltip>
-                        <AccordionContent className="pl-8 pr-2 hidden lg:block">
-                            <nav className="grid gap-1">
-                            {projects.map(project => (
-                                <Link key={project.id} href={`/admin/projects/${project.id}`} className={cn(
-                                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
-                                    pathname === `/admin/projects/${project.id}` && "bg-accent text-primary font-medium"
-                                )}>
-                                    {project.name}
-                                </Link>
-                            ))}
-                            </nav>
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-             )}
         </TooltipProvider>
       </nav>
       <div className="mt-auto p-4 border-t">
