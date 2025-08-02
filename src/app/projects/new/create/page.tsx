@@ -9,10 +9,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { users } from "@/lib/data";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft, X } from "lucide-react";
+import Link from "next/link";
+import { MultiSelect } from "@/components/ui/multi-select";
 
 
 const formSchema = z.object({
@@ -20,6 +22,8 @@ const formSchema = z.object({
   projectDescription: z.string().min(10, "Description must be at least 10 characters."),
   team: z.array(z.string()).min(1, "You must select at least one team member."),
 });
+
+const teamOptions = users.map(user => ({ value: user.id, label: user.name }));
 
 export default function CreateProjectFormPage() {
   const router = useRouter();
@@ -44,70 +48,85 @@ export default function CreateProjectFormPage() {
   }
 
   return (
-    <div className="flex flex-col">
-       <div className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">Create New Project</h1>
-          <p className="text-muted-foreground mt-1">Fill in the details below to start your new project.</p>
-        </div>
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Card>
-                    <CardContent className="p-6 space-y-6">
-                        <FormField
-                        control={form.control}
-                        name="projectName"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Project Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="e.g., Q4 Marketing Campaign" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                         <FormField
-                        control={form.control}
-                        name="projectDescription"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Project Description</FormLabel>
-                            <FormControl>
-                                <Textarea placeholder="A brief description of what this project is about." {...field} rows={4} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="team"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Assign Team</FormLabel>
-                                <Select onValueChange={(value) => field.onChange([value])} defaultValue={field.value?.[0]}>
+    <div className="flex flex-col min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+        <header className="flex items-center justify-between mb-8">
+            <Button variant="ghost" size="icon" asChild>
+                <Link href="/projects/new-project">
+                    <ArrowLeft className="h-5 w-5" />
+                    <span className="sr-only">Back</span>
+                </Link>
+            </Button>
+            <h1 className="text-xl font-semibold">Create Project</h1>
+            <Button variant="ghost" size="icon" asChild>
+                <Link href="/projects">
+                     <X className="h-5 w-5" />
+                     <span className="sr-only">Close</span>
+                </Link>
+            </Button>
+        </header>
+
+        <main className="flex-1 flex items-center justify-center">
+            <div className="w-full max-w-2xl">
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <Card>
+                             <CardHeader>
+                                <CardTitle>Project Details</CardTitle>
+                                <CardDescription>Fill in the details below to start your new project.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="p-6 space-y-6">
+                                <FormField
+                                control={form.control}
+                                name="projectName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Project Name</FormLabel>
                                     <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select team members" />
-                                    </SelectTrigger>
+                                        <Input placeholder="e.g., Q4 Marketing Campaign" {...field} />
                                     </FormControl>
-                                    <SelectContent>
-                                    {users.map(user => (
-                                        <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>
-                                    ))}
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                            />
-                    </CardContent>
-                    <CardFooter className="border-t px-6 py-4">
-                        <Button type="submit">Create Project</Button>
-                    </CardFooter>
-                </Card>
-            </form>
-        </Form>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                                />
+                                <FormField
+                                control={form.control}
+                                name="projectDescription"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Project Description</FormLabel>
+                                    <FormControl>
+                                        <Textarea placeholder="A brief description of what this project is about." {...field} rows={4} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="team"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Assign Team</FormLabel>
+                                            <MultiSelect
+                                                options={teamOptions}
+                                                selected={field.value}
+                                                onChange={field.onChange}
+                                                placeholder="Select team members..."
+                                                className="w-full"
+                                            />
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </CardContent>
+                            <CardFooter className="border-t px-6 py-4">
+                                <Button type="submit">Create Project</Button>
+                            </CardFooter>
+                        </Card>
+                    </form>
+                </Form>
+            </div>
+        </main>
     </div>
   );
 }
