@@ -5,11 +5,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Shapes, AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Image from 'next/image';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -27,59 +27,71 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
-      <main className="w-full max-w-sm mx-auto p-4">
-        <Card>
-          <CardHeader className="space-y-1 text-center">
-            <div className="flex justify-center items-center gap-2 mb-4">
+    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
+      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto grid w-[350px] gap-6">
+          <div className="grid gap-2 text-center">
+             <div className="flex justify-center items-center gap-2 mb-4">
               <Shapes className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold">clsPMT™</h1>
+              <h1 className="text-3xl font-bold">clsPMT™</h1>
             </div>
-            <CardTitle className="text-2xl font-bold">Admin Login</CardTitle>
-            <CardDescription>Enter your administrator credentials</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {error && (
-                <Alert variant="destructive" className="mb-4">
+            <h2 className="text-2xl font-bold">Admin Login</h2>
+            <p className="text-balance text-muted-foreground">
+              Enter your administrator credentials to access the dashboard.
+            </p>
+          </div>
+           {error && (
+                <Alert variant="destructive">
                     <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>Login Failed</AlertTitle>
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
             )}
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <Input 
-                  id="username" 
-                  placeholder="adminclspmt" 
-                  required 
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                placeholder="adminclspmt"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  required 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
               </div>
-              <Button type="button" className="w-full" onClick={handleLogin}>
-                Login
-              </Button>
+              <Input 
+                id="password" 
+                type="password" 
+                required 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-            <div className="mt-4 text-center text-sm">
-                Not an admin?{' '}
-                <Link href="/" prefetch={false} className="underline">
-                    User Login
-                </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </main>
+            <Button type="button" className="w-full" onClick={handleLogin}>
+              Login
+            </Button>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Not an admin?{" "}
+            <Link href="/" className="underline">
+              Return to homepage
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="hidden bg-muted lg:block">
+        <Image
+          src="https://placehold.co/1200x900.png"
+          alt="Admin dashboard graphic"
+          width="1920"
+          height="1080"
+          className="h-full w-full object-cover dark:brightness-[0.3] dark:grayscale"
+          data-ai-hint="abstract security"
+        />
+      </div>
     </div>
   );
 }
