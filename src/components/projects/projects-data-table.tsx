@@ -57,7 +57,7 @@ export const columns: ColumnDef<Project>[] = [
           </Button>
         )
       },
-    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
+    cell: ({ row }) => <Link href={`/projects/${row.original.id}`} className="font-medium hover:underline">{row.getValue("name")}</Link>,
   },
   {
     accessorKey: "status",
@@ -69,7 +69,7 @@ export const columns: ColumnDef<Project>[] = [
     header: "Progress",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <Progress value={row.getValue("progress")} className="w-24" />
+        <Progress value={row.getValue("progress")} className="w-24 h-2" />
         <span>{row.getValue("progress")}%</span>
       </div>
     ),

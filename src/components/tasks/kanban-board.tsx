@@ -1,23 +1,28 @@
-import { tasks } from "@/lib/data";
+
+import { Task } from "@/lib/data";
 import { TaskCard } from "./task-card";
 import { TaskStatus } from "@/types";
 
-const columns: { title: TaskStatus; tasks: typeof tasks }[] = [
-  {
-    title: "To Do",
-    tasks: tasks.filter((task) => task.status === "To Do"),
-  },
-  {
-    title: "In Progress",
-    tasks: tasks.filter((task) => task.status === "In Progress"),
-  },
-  {
-    title: "Done",
-    tasks: tasks.filter((task) => task.status === "Done"),
-  },
-];
+interface KanbanBoardProps {
+  tasks: Task[];
+}
 
-export function KanbanBoard() {
+export function KanbanBoard({ tasks }: KanbanBoardProps) {
+  const columns: { title: TaskStatus; tasks: typeof tasks }[] = [
+    {
+      title: "To Do",
+      tasks: tasks.filter((task) => task.status === "To Do"),
+    },
+    {
+      title: "In Progress",
+      tasks: tasks.filter((task) => task.status === "In Progress"),
+    },
+    {
+      title: "Done",
+      tasks: tasks.filter((task) => task.status === "Done"),
+    },
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
       {columns.map((column) => (
@@ -32,6 +37,11 @@ export function KanbanBoard() {
             {column.tasks.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
+            {column.tasks.length === 0 && (
+              <div className="text-center text-sm text-muted-foreground py-8">
+                No tasks in this column.
+              </div>
+            )}
           </div>
         </div>
       ))}

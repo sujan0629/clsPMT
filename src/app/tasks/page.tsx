@@ -1,7 +1,9 @@
+
 import { KanbanBoard } from "@/components/tasks/kanban-board";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { AddTaskDialog } from "@/components/tasks/add-task-dialog";
+import { tasks } from "@/lib/data";
 
 export default function TasksPage() {
   return (
@@ -16,7 +18,7 @@ export default function TasksPage() {
         </AddTaskDialog>
       </div>
       <div className="flex-1 overflow-x-auto">
-        <KanbanBoard />
+        <KanbanBoard tasks={tasks} />
       </div>
     </div>
   );
