@@ -66,15 +66,15 @@ export default function CreateProjectFormPage() {
         </header>
 
         <main className="flex-1 flex items-center justify-center">
-            <div className="w-full max-w-2xl">
+            <div className="w-full max-w-lg">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <Card>
+                        <Card className="rounded-xl">
                              <CardHeader>
                                 <CardTitle>Project Details</CardTitle>
                                 <CardDescription>Fill in the details below to start your new project.</CardDescription>
                             </CardHeader>
-                            <CardContent className="p-6 space-y-6">
+                            <CardContent className="p-6 space-y-4">
                                 <FormField
                                 control={form.control}
                                 name="projectName"
@@ -95,7 +95,7 @@ export default function CreateProjectFormPage() {
                                     <FormItem>
                                     <FormLabel>Project Description</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="A brief description of what this project is about." {...field} rows={4} />
+                                        <Textarea placeholder="A brief description of what this project is about." {...field} rows={3} />
                                     </FormControl>
                                     <FormMessage />
                                     </FormItem>
