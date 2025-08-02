@@ -1,3 +1,4 @@
+
 "use client";
 
 import { MainNav } from "@/components/main-nav";
@@ -16,6 +17,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <main className="flex-1 overflow-y-auto p-6 md:p-8">
             {children}
           </main>
+           <footer className="shrink-0 border-t px-6 py-4">
+              <p className="text-xs text-muted-foreground text-center">&copy; {new Date().getFullYear()} Codelits Studio Pvt. Ltd. All rights reserved.</p>
+           </footer>
         </SidebarInset>
       </div>
     </SidebarProvider>
