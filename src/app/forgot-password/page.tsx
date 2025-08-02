@@ -5,18 +5,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Shapes } from 'lucide-react';
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
       <main className="w-full max-w-sm mx-auto p-4">
-        <Card>
+        <Card className="w-full">
           <CardHeader className="space-y-1 text-center">
               <div className="flex justify-center items-center gap-2 mb-4">
                   <Shapes className="h-8 w-8 text-primary" />
                   <h1 className="text-2xl font-bold">clsPMT™</h1>
               </div>
-            <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-            <CardDescription>Enter your email below to login to your account</CardDescription>
+            <CardTitle className="text-2xl font-bold">Forgot Password</CardTitle>
+            <CardDescription>Enter your email and we'll send you a link to reset your password.</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -24,26 +24,14 @@ export default function LoginPage() {
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="m@example.com" required />
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <Link href="/forgot-password" prefetch={false} className="ml-auto inline-block text-sm underline">
-                    Forgot your password?
-                  </Link>
-                </div>
-                <Input id="password" type="password" required />
-              </div>
-              <Button asChild type="submit" className="w-full">
-                <Link href="/dashboard">Login</Link>
-              </Button>
-              <Button variant="outline" className="w-full">
-                Login with Google
+              <Button type="submit" className="w-full">
+                Send Reset Link
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{' '}
-              <Link href="/signup" prefetch={false} className="underline">
-                Sign up
+              Remembered your password?{' '}
+              <Link href="/" prefetch={false} className="underline">
+                Login
               </Link>
             </div>
           </CardContent>
