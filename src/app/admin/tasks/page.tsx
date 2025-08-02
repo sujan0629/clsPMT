@@ -109,11 +109,11 @@ export default function TasksPage() {
                                     <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                                 </Avatar>
                                 <div className="text-left">
-                                    <p className="font-semibold">{user.name}</p>
-                                    <p className="text-sm text-muted-foreground">{user.tasks.length} task(s) assigned</p>
+                                    <p className="font-semibold text-sm">{user.name}</p>
+                                    <p className="text-xs text-muted-foreground">{user.tasks.length} task(s) assigned</p>
                                 </div>
                             </div>
-                            <Button variant="ghost" size="sm" onClick={(e) => handleViewUserTasks(e, user.id)}>
+                            <Button variant="outline" size="sm" onClick={(e) => handleViewUserTasks(e, user.id)}>
                                 <Eye className="mr-2 h-4 w-4" />
                                 View Board
                             </Button>

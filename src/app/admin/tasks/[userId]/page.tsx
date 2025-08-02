@@ -36,8 +36,8 @@ export default function UserTasksPage() {
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div>
-                 <h1 className="text-3xl font-bold tracking-tight">{user.name}'s Tasks</h1>
-                 <p className="text-muted-foreground">{userTasks.length} task(s) assigned</p>
+                 <h1 className="text-2xl font-bold tracking-tight">{user.name}'s Tasks</h1>
+                 <p className="text-sm text-muted-foreground">{userTasks.length} task(s) assigned</p>
             </div>
         </div>
       </div>
