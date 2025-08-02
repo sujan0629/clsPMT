@@ -16,7 +16,13 @@ export default {
       },
     },
     extend: {
+      fontSize: {
+        xs: "0.7rem",
+        sm: "0.8rem",
+        base: "0.9rem",
+      },
       fontFamily: {
+        sans: ["var(--font-sans)", "sans-serif"],
         body: ['Inter', 'sans-serif'],
         headline: ['Inter', 'sans-serif'],
         code: ['"Source Code Pro"', 'monospace'],
