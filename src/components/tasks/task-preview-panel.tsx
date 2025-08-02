@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { BookText, FileText, Type, Pencil, Save, X } from "lucide-react";
 import type { FormSchemaType, FocusableField } from '@/app/admin/tasks/new/page';
+import { cn } from '@/lib/utils';
 
 interface TaskPreviewPanelProps {
     focusedField: FocusableField;
@@ -44,14 +45,14 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
                         <Input 
                             value={editValue} 
                             onChange={(e) => setEditValue(e.target.value)}
-                            className="text-2xl font-bold h-auto p-2"
+                            className="text-2xl font-bold h-auto p-0 border-0 focus-visible:ring-0 bg-transparent shadow-none"
                             autoFocus
                         />
                     ) : (
                         <Textarea 
                             value={editValue} 
                             onChange={(e) => setEditValue(e.target.value)}
-                            className="text-sm min-h-[200px]"
+                            className="text-sm min-h-[200px] p-0 border-0 focus-visible:ring-0 bg-transparent shadow-none"
                             autoFocus
                         />
                     )}
@@ -107,7 +108,10 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
                     )}
                 </div>
             )}
-            <div className="flex-1 bg-muted/30 border-2 border-dashed rounded-xl flex items-center justify-center p-8">
+            <div className={cn(
+                "flex-1 bg-muted/30 border-2 border-dashed rounded-xl p-8",
+                 !header && "flex items-center justify-center"
+            )}>
                 <div className="w-full">
                    {getPreviewContent()}
                 </div>
@@ -115,4 +119,3 @@ export function TaskPreviewPanel({ focusedField, formData, form }: TaskPreviewPa
         </div>
     );
 }
-
