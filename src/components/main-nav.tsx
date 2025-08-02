@@ -8,17 +8,28 @@ import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 import { projects } from "@/lib/data";
+import { useState, useEffect } from "react";
 
 const navItems = [
-  { href: "/home", label: "Home", icon: Home },
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/tasks", label: "Tasks", icon: CheckSquare },
-  { href: "/calendar", label: "Calendar", icon: CalendarDays },
-  { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot },
+  { href: "/home", label: "Home", icon: Home, adminOnly: false },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, adminOnly: false },
+  { href: "/tasks", label: "Tasks", icon: CheckSquare, adminOnly: false },
+  { href: "/calendar", label: "Calendar", icon: CalendarDays, adminOnly: false },
+  { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot, adminOnly: true },
 ];
 
 export function MainNav() {
   const pathname = usePathname();
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        setUserRole(sessionStorage.getItem('userRole'));
+    }
+  }, []);
+
+  const isAdmin = userRole === 'admin';
+  const visibleNavItems = navItems.filter(item => !item.adminOnly || isAdmin);
 
   return (
     <div className="flex h-full flex-col">
@@ -30,7 +41,7 @@ export function MainNav() {
       </div>
       <nav className="flex-1 space-y-1 p-2">
         <TooltipProvider>
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
                 <Tooltip key={item.href} delayDuration={0}>
                 <TooltipTrigger asChild>
                     <Link
