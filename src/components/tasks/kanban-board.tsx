@@ -18,13 +18,17 @@ export function KanbanBoard({ tasks }: KanbanBoardProps) {
       tasks: tasks.filter((task) => task.status === "In Progress"),
     },
     {
+      title: "On Hold",
+      tasks: tasks.filter((task) => task.status === "On Hold"),
+    },
+    {
       title: "Done",
       tasks: tasks.filter((task) => task.status === "Done"),
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
       {columns.map((column) => (
         <div key={column.title} className="bg-muted/50 rounded-lg p-4">
           <h2 className="text-lg font-semibold mb-4 text-foreground flex items-center">

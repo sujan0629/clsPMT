@@ -98,7 +98,7 @@ export const tasks: Task[] = [
   {
     id: "task-5",
     title: "Create UI component library",
-    status: "In Progress",
+    status: "On Hold",
     priority: "High",
     assignees: [users[2], users[3]],
     dueDate: new Date("2024-11-01"),

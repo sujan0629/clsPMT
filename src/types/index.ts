@@ -5,7 +5,7 @@ export type User = {
   role: "Admin" | "Manager" | "Member";
 };
 
-export type TaskStatus = "To Do" | "In Progress" | "Done";
+export type TaskStatus = "To Do" | "In Progress" | "On Hold" | "Done";
 export type TaskPriority = "Low" | "Medium" | "High";
 
 export type Comment = {

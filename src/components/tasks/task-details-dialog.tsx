@@ -1,6 +1,6 @@
 "use client"
 
-import { Task } from "@/types";
+import { Task, TaskStatus } from "@/types";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
 import { Paperclip, Send } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { useState } from "react";
 
 interface TaskDetailsDialogProps {
   task: Task;
@@ -28,7 +30,10 @@ const priorityVariant: Record<string, "default" | "secondary" | "destructive" | 
   High: "destructive",
 };
 
+const statusOptions: TaskStatus[] = ["To Do", "In Progress", "On Hold", "Done"];
+
 export function TaskDetailsDialog({ task, children }: TaskDetailsDialogProps) {
+  const [status, setStatus] = useState(task.status);
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -37,7 +42,16 @@ export function TaskDetailsDialog({ task, children }: TaskDetailsDialogProps) {
           <DialogTitle className="flex items-center gap-4">
             {task.title}
             <Badge variant={priorityVariant[task.priority]}>{task.priority}</Badge>
-            <Badge variant="outline">{task.status}</Badge>
+             <Select value={status} onValueChange={(value) => setStatus(value as TaskStatus)}>
+                <SelectTrigger className="w-[150px] h-7 text-xs">
+                    <SelectValue placeholder="Set status" />
+                </SelectTrigger>
+                <SelectContent>
+                    {statusOptions.map(option => (
+                        <SelectItem key={option} value={option}>{option}</SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
           </DialogTitle>
           <div className="text-sm text-muted-foreground">
             In project: <span className="font-semibold text-foreground">{task.projectName}</span>
@@ -57,11 +71,21 @@ export function TaskDetailsDialog({ task, children }: TaskDetailsDialogProps) {
           </TabsContent>
           <TabsContent value="subtasks" className="py-4 space-y-2">
             {task.subtasks.map(subtask => (
-              <div key={subtask.id} className="flex items-center space-x-2">
+              <div key={subtask.id} className="flex items-center space-x-3">
                 <Checkbox id={subtask.id} checked={subtask.completed} />
-                <label htmlFor={subtask.id} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                <label htmlFor={subtask.id} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex-1">
                   {subtask.title}
                 </label>
+                 <Select defaultValue={subtask.completed ? "Done" : "To Do"} >
+                    <SelectTrigger className="w-[150px] h-8 text-xs">
+                        <SelectValue placeholder="Set status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {statusOptions.map(option => (
+                            <SelectItem key={option} value={option}>{option}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
               </div>
             ))}
              {task.subtasks.length === 0 && <p className="text-sm text-muted-foreground">No subtasks yet.</p>}
