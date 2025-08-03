@@ -16,7 +16,7 @@ const deadlineData = projects
 
 export function Deadlines() {
     return (
-        <div className="h-[80px]">
+        <div className="h-[120px]">
              <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={deadlineData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                     <Tooltip 
@@ -28,7 +28,7 @@ export function Deadlines() {
                         labelFormatter={(value) => deadlineData.find(d => d.deadline === value)?.name}
                         formatter={(value, name, props) => [format(new Date(props.payload.deadline), 'PPP'), 'Deadline']}
                     />
-                    <Line type="monotone" dataKey="deadline" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                    <Line type="monotone" dataKey="deadline" stroke="hsl(var(--primary))" strokeWidth={2} dot={true} />
                 </LineChart>
             </ResponsiveContainer>
         </div>

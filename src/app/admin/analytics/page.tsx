@@ -2,8 +2,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Deadlines } from "@/components/dashboard/deadlines";
 import { FocusMode } from "@/components/dashboard/focus-mode";
-import { TasksChart } from "@/components/dashboard/tasks-chart";
 import { TeamProductivity } from "@/components/dashboard/team-productivity";
+import { TaskStatusChart } from "@/components/analytics/task-status-chart";
+import { ProjectStatusChart } from "@/components/analytics/project-status-chart";
 
 
 export default function AnalyticsPage() {
@@ -25,15 +26,12 @@ export default function AnalyticsPage() {
                 <Deadlines />
             </CardContent>
         </Card>
+        <TaskStatusChart />
+        <ProjectStatusChart />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <TeamProductivity />
-        </div>
-        <div>
-          <TasksChart />
-        </div>
+      <div className="grid grid-cols-1 gap-6">
+        <TeamProductivity />
       </div>
     </div>
   );
