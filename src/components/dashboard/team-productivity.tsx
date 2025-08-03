@@ -4,7 +4,7 @@
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { users, tasks } from "@/lib/data"
-import { ChartTooltipContent, ChartContainer, ChartLegend, ChartLegendContent } from "../ui/chart"
+import { ChartTooltip, ChartTooltipContent, ChartContainer, ChartLegend, ChartLegendContent } from "../ui/chart"
 
 const productivityData = users.map(user => {
   const completed = tasks.filter(t => t.assignees.some(a => a.id === user.id) && t.status === 'Done').length;
