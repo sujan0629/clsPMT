@@ -52,7 +52,10 @@ export const tasks: Task[] = [
       { id: "sub-1-1", title: "Wireframing", completed: true },
       { id: "sub-1-2", title: "Visual design", completed: false },
     ],
-    comments: [],
+    comments: [
+        { id: "comment-1", author: users[1], content: "Hey @James, how is the progress on this? The deadline is approaching.", timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000) },
+        { id: "comment-2", author: users[2], content: "@Maria, the wireframes are done. I'm starting on the visual design now. Should have a first draft by EOD tomorrow.", timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) },
+    ],
     attachments: [],
     projectId: "proj-1",
     projectName: "Website Redesign",

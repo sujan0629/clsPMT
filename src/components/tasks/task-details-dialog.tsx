@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Task, TaskStatus } from "@/types";
@@ -18,6 +19,7 @@ import { Paperclip, Send } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useState } from "react";
+import { users } from "@/lib/data";
 
 interface TaskDetailsDialogProps {
   task: Task;
@@ -34,6 +36,22 @@ const statusOptions: TaskStatus[] = ["To Do", "In Progress", "On Hold", "Done"];
 
 export function TaskDetailsDialog({ task, children }: TaskDetailsDialogProps) {
   const [status, setStatus] = useState(task.status);
+  const [comments, setComments] = useState(task.comments);
+  const [newComment, setNewComment] = useState("");
+
+  const handleAddComment = () => {
+    if (newComment.trim()) {
+      const newCommentObj = {
+        id: `comment-${comments.length + 1}-${Date.now()}`,
+        author: users[0], // Assuming current user is the first user for demo
+        content: newComment,
+        timestamp: new Date(),
+      };
+      setComments([...comments, newCommentObj]);
+      setNewComment("");
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -63,7 +81,7 @@ export function TaskDetailsDialog({ task, children }: TaskDetailsDialogProps) {
           <TabsList>
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="subtasks">Subtasks ({task.subtasks.length})</TabsTrigger>
-            <TabsTrigger value="comments">Comments ({task.comments.length})</TabsTrigger>
+            <TabsTrigger value="comments">Comments ({comments.length})</TabsTrigger>
             <TabsTrigger value="attachments">Attachments ({task.attachments.length})</TabsTrigger>
           </TabsList>
           <TabsContent value="details" className="py-4">
@@ -91,9 +109,9 @@ export function TaskDetailsDialog({ task, children }: TaskDetailsDialogProps) {
              {task.subtasks.length === 0 && <p className="text-sm text-muted-foreground">No subtasks yet.</p>}
           </TabsContent>
           <TabsContent value="comments" className="py-4">
-             {task.comments.length === 0 && <p className="text-sm text-muted-foreground mb-4">No comments yet. Be the first to comment!</p>}
+             {comments.length === 0 && <p className="text-sm text-muted-foreground mb-4">No comments yet. Be the first to comment!</p>}
             <div className="space-y-4">
-              {task.comments.map(comment => (
+              {comments.map(comment => (
                 <div key={comment.id} className="flex items-start gap-3">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={comment.author.avatarUrl} />
@@ -114,9 +132,20 @@ export function TaskDetailsDialog({ task, children }: TaskDetailsDialogProps) {
                       <AvatarFallback>A</AvatarFallback>
                   </Avatar>
                   <div className="w-full relative">
-                    <Textarea placeholder="Write a comment... (@mention to notify)" className="pr-20" />
+                    <Textarea 
+                      placeholder="Write a comment... (@mention to notify)" 
+                      className="pr-20"
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                      onKeyDown={(e) => {
+                        if(e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleAddComment();
+                        }
+                      }}
+                    />
                     <Button size="icon" variant="ghost" className="absolute right-10 top-1.5"><Paperclip className="h-4 w-4" /></Button>
-                    <Button size="icon" className="absolute right-1 top-1.5"><Send className="h-4 w-4" /></Button>
+                    <Button size="icon" className="absolute right-1 top-1.5" onClick={handleAddComment}><Send className="h-4 w-4" /></Button>
                   </div>
               </div>
             </div>
