@@ -57,7 +57,7 @@ export function MainNav() {
           <span className="hidden lg:block">clsPMT™</span>
         </Link>
       </div>
-      <nav className="flex-1 space-y-0.5 p-2">
+      <nav className="flex-1 space-y-2 p-2">
         <TooltipProvider>
             {navItems.map((item) => (
                 <Tooltip key={item.href} delayDuration={0}>
@@ -66,7 +66,7 @@ export function MainNav() {
                             <Link
                                 href={item.href}
                                 className={cn(
-                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-1.5 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
                                     pathname === item.href && "bg-accent text-primary font-semibold"
                                 )}
                                 >
@@ -81,15 +81,15 @@ export function MainNav() {
                 </Tooltip>
             ))}
 
-             <Accordion type="single" collapsible defaultValue={pathname.includes('/projects/') ? "projects" : ""} className="space-y-0.5">
+             <Accordion type="single" collapsible defaultValue={pathname.includes('/projects/') ? "projects" : ""} className="space-y-2">
                 <AccordionItem value="projects" className="border-b-0">
                     <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                             <span className="w-full">
                                 <AccordionTrigger className={cn(
-                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-1.5 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
                                     pathname.startsWith(projectsPath) && !pathname.startsWith('/admin/home') && "bg-accent text-primary font-semibold",
-                                    "hover:no-underline font-normal text-sm w-full"
+                                    "hover:no-underline font-normal text-base w-full"
                                 )}>
                                     <Link href={projectsPath} className="flex items-center gap-3">
                                         <FolderKanban className="h-5 w-5" />
@@ -103,10 +103,10 @@ export function MainNav() {
                         </TooltipContent>
                     </Tooltip>
                     <AccordionContent className="pl-8 pr-2 hidden lg:block">
-                        <nav className="grid gap-0.5 pt-1">
+                        <nav className="grid gap-1 pt-2">
                         {projects.map(project => (
                              <Link key={project.id} href={`${projectsPath}/${project.id}`} className={cn(
-                                "flex items-center gap-3 rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
+                                "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
                                 pathname === `${projectsPath}/${project.id}` && "bg-accent text-primary font-medium"
                              )}>
                                 {project.name}
@@ -116,15 +116,15 @@ export function MainNav() {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-             <Accordion type="single" collapsible defaultValue={pathname.startsWith('/ai-') ? "ai-tools" : ""} className="space-y-0.5">
+             <Accordion type="single" collapsible defaultValue={pathname.startsWith('/ai-') ? "ai-tools" : ""} className="space-y-2">
                 <AccordionItem value="ai-tools" className="border-b-0">
                     <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                             <span className="w-full">
                                 <AccordionTrigger className={cn(
-                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-1.5 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
                                     pathname.startsWith('/ai-') && "bg-accent text-primary font-semibold",
-                                    "hover:no-underline font-normal text-sm w-full"
+                                    "hover:no-underline font-normal text-base w-full"
                                 )}>
                                     <div className="flex items-center gap-3">
                                         <Bot className="h-5 w-5" />
@@ -138,10 +138,10 @@ export function MainNav() {
                         </TooltipContent>
                     </Tooltip>
                     <AccordionContent className="pl-8 pr-2 hidden lg:block">
-                        <nav className="grid gap-0.5 pt-1">
+                        <nav className="grid gap-1 pt-2">
                         {aiNavItems.map(item => (
                              <Link key={item.href} href={item.href} className={cn(
-                                "flex items-center gap-3 rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
+                                "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
                                 pathname === item.href && "bg-accent text-primary font-medium"
                              )}>
                                 <item.icon className="h-4 w-4 mr-1"/>
@@ -162,7 +162,7 @@ export function MainNav() {
                         <Link
                             href={settingsPath}
                             className={cn(
-                            "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-1.5 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                            "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
                             pathname.startsWith(settingsPath) && "bg-accent text-primary font-semibold"
                             )}
                         >
