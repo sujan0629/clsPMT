@@ -5,8 +5,6 @@ import { FocusMode } from "@/components/dashboard/focus-mode";
 import { TeamProductivity } from "@/components/dashboard/team-productivity";
 import { TaskStatusChart } from "@/components/analytics/task-status-chart";
 import { ProjectStatusChart } from "@/components/analytics/project-status-chart";
-import { TasksChart } from "@/components/dashboard/tasks-chart";
-import { RecentActivity } from "@/components/dashboard/recent-activity";
 
 
 export default function AnalyticsPage() {
@@ -30,22 +28,6 @@ export default function AnalyticsPage() {
         </Card>
         <TaskStatusChart />
         <ProjectStatusChart />
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-            <TasksChart />
-        </div>
-        <div>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <RecentActivity />
-                </CardContent>
-            </Card>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
