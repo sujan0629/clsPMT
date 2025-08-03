@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban } from "lucide-react";
+import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
@@ -26,6 +26,7 @@ export function MainNav() {
   const adminNavItems = [
       { href: "/admin/home", label: "Home", icon: Home },
       { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
       { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot },
@@ -57,16 +58,18 @@ export function MainNav() {
             {navItems.map((item) => (
                 <Tooltip key={item.href} delayDuration={0}>
                     <TooltipTrigger asChild>
-                        <Link
-                            href={item.href}
-                            className={cn(
-                                "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                                pathname === item.href && "bg-accent text-primary font-semibold"
-                            )}
-                            >
-                            <item.icon className="h-5 w-5" />
-                            <span className="hidden lg:inline">{item.label}</span>
-                        </Link>
+                        <span>
+                            <Link
+                                href={item.href}
+                                className={cn(
+                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                                    pathname === item.href && "bg-accent text-primary font-semibold"
+                                )}
+                                >
+                                <item.icon className="h-5 w-5" />
+                                <span className="hidden lg:inline">{item.label}</span>
+                            </Link>
+                        </span>
                     </TooltipTrigger>
                     <TooltipContent side="right" className="block lg:hidden">
                         <p>{item.label}</p>
@@ -115,16 +118,18 @@ export function MainNav() {
         <TooltipProvider>
             <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
-                    <Link
-                        href={settingsPath}
-                        className={cn(
-                        "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                        pathname.startsWith(settingsPath) && "bg-accent text-primary font-semibold"
-                        )}
-                    >
-                        <Settings className="h-5 w-5" />
-                        <span className="hidden lg:inline">Settings</span>
-                    </Link>
+                    <span>
+                        <Link
+                            href={settingsPath}
+                            className={cn(
+                            "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                            pathname.startsWith(settingsPath) && "bg-accent text-primary font-semibold"
+                            )}
+                        >
+                            <Settings className="h-5 w-5" />
+                            <span className="hidden lg:inline">Settings</span>
+                        </Link>
+                    </span>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="block lg:hidden">
                     <p>Settings</p>
