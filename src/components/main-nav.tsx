@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban, BarChart3 } from "lucide-react";
+import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban, BarChart3, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
@@ -29,7 +29,6 @@ export function MainNav() {
       { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
-      { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot },
   ];
 
   const userNavItems = [
@@ -37,8 +36,13 @@ export function MainNav() {
       { href: "/user/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/user/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/user/calendar", label: "Calendar", icon: CalendarDays },
-      { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot },
   ];
+  
+  const aiNavItems = [
+      { href: "/ai-prioritizer", label: "Task Prioritizer", icon: Bot },
+      { href: "/ai-meeting-summarizer", label: "Meeting Summarizer", icon: ClipboardList },
+  ];
+
 
   const navItems = isAdmin ? adminNavItems : userNavItems;
   const homePath = isAdmin ? '/admin/home' : '/user/home';
@@ -106,6 +110,42 @@ export function MainNav() {
                                 pathname === `${projectsPath}/${project.id}` && "bg-accent text-primary font-medium"
                              )}>
                                 {project.name}
+                             </Link>
+                        ))}
+                        </nav>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+             <Accordion type="single" collapsible defaultValue={pathname.startsWith('/ai-') ? "ai-tools" : ""} className="space-y-1">
+                <AccordionItem value="ai-tools" className="border-b-0">
+                    <Tooltip delayDuration={0}>
+                        <TooltipTrigger asChild>
+                            <span className="w-full">
+                                <AccordionTrigger className={cn(
+                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                                    pathname.startsWith('/ai-') && "bg-accent text-primary font-semibold",
+                                    "hover:no-underline font-normal text-sm w-full"
+                                )}>
+                                    <div className="flex items-center gap-3">
+                                        <Bot className="h-5 w-5" />
+                                        <span className="hidden lg:inline">AI Assistant</span>
+                                    </div>
+                                </AccordionTrigger>
+                            </span>
+                        </TooltipTrigger>
+                         <TooltipContent side="right" className="block lg:hidden">
+                            <p>AI Assistant</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <AccordionContent className="pl-8 pr-2 hidden lg:block">
+                        <nav className="grid gap-1 pt-1">
+                        {aiNavItems.map(item => (
+                             <Link key={item.href} href={item.href} className={cn(
+                                "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
+                                pathname === item.href && "bg-accent text-primary font-medium"
+                             )}>
+                                <item.icon className="h-4 w-4 mr-1"/>
+                                {item.label}
                              </Link>
                         ))}
                         </nav>
