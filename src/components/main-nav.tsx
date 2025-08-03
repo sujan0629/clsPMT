@@ -24,6 +24,7 @@ export function MainNav() {
   const isAdmin = userRole === 'admin';
 
   const adminNavItems = [
+      { href: "/admin/home", label: "Home", icon: Home },
       { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
@@ -38,7 +39,7 @@ export function MainNav() {
   ];
 
   const navItems = isAdmin ? adminNavItems : userNavItems;
-  const homePath = isAdmin ? '/admin/dashboard' : '/user/home';
+  const homePath = isAdmin ? '/admin/home' : '/user/home';
   const settingsPath = isAdmin ? '/admin/settings' : '/user/settings';
   const projectsPath = isAdmin ? '/admin/projects' : '/user/projects';
 
@@ -59,7 +60,7 @@ export function MainNav() {
                     href={item.href}
                     className={cn(
                         "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                        pathname.startsWith(item.href) && "bg-accent text-primary font-semibold"
+                        pathname === item.href && "bg-accent text-primary font-semibold"
                     )}
                     >
                     <item.icon className="h-5 w-5" />
@@ -78,7 +79,7 @@ export function MainNav() {
                         <TooltipTrigger asChild className="w-full">
                              <AccordionTrigger className={cn(
                                 "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                                pathname.startsWith(projectsPath) && "bg-accent text-primary font-semibold",
+                                pathname.startsWith(projectsPath) && !pathname.startsWith('/admin/home') && "bg-accent text-primary font-semibold",
                                 "hover:no-underline font-normal text-sm"
                             )}>
                                  <Link href={projectsPath} className="flex items-center gap-3">
