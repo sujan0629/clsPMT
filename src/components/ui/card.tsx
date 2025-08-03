@@ -1,6 +1,27 @@
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { cva, type VariantProps } from "class-variance-authority"
+
+const cardTitleVariants = cva(
+  "font-semibold leading-none tracking-tight",
+  {
+    variants: {
+      size: {
+        default: "text-2xl",
+        sm: "text-sm",
+        lg: "text-lg",
+      },
+    },
+    defaultVariants: {
+      size: "default",
+    },
+  }
+)
+
+export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof cardTitleVariants> {}
+
 
 const Card = React.forwardRef<
   HTMLDivElement,
@@ -31,14 +52,11 @@ CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  CardTitleProps
+>(({ className, size, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className
-    )}
+    className={cn(cardTitleVariants({ size, className }))}
     {...props}
   />
 ))
