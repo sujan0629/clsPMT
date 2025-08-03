@@ -11,10 +11,11 @@ import { Progress } from '@/components/ui/progress';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
 
 export default function AdminHomePage() {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState<Date | null>(null);
 
     useEffect(() => {
         const timer = setInterval(() => setDate(new Date()), 60000);
+        setDate(new Date());
         return () => clearInterval(timer);
     }, []);
 
@@ -37,7 +38,7 @@ export default function AdminHomePage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Admin Home</h1>
-                    <p className="text-muted-foreground mt-1">{format(date, "EEEE, MMMM d")}</p>
+                    {date && <p className="text-muted-foreground mt-1">{format(date, "EEEE, MMMM d")}</p>}
                 </div>
             </div>
 
