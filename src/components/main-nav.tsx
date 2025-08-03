@@ -56,7 +56,7 @@ export function MainNav() {
         <TooltipProvider>
             {navItems.map((item) => (
                 <Tooltip key={item.href} delayDuration={0}>
-                <TooltipTrigger asChild>
+                <TooltipTrigger>
                     <Link
                     href={item.href}
                     className={cn(
@@ -112,7 +112,7 @@ export function MainNav() {
       <div className="mt-auto p-4 border-t">
         <TooltipProvider>
             <Tooltip delayDuration={0}>
-              <TooltipTrigger asChild>
+              <TooltipTrigger>
                 <Link
                   href={settingsPath}
                   className={cn(
