@@ -36,6 +36,7 @@ export function MainNav() {
       { href: "/user/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/user/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/user/calendar", label: "Calendar", icon: CalendarDays },
+      { href: "/ai-prioritizer", label: "AI Assistant", icon: Bot },
   ];
 
   const navItems = isAdmin ? adminNavItems : userNavItems;
