@@ -4,11 +4,10 @@
 import { useState } from "react";
 import { users, teams } from "@/lib/data";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { Users as UsersIcon } from "lucide-react";
 
 
