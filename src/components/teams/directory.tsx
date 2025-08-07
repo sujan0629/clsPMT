@@ -64,7 +64,7 @@ export function TeamDirectory() {
                                 <Card className="h-full transition-all duration-200 group-hover:bg-accent group-hover:shadow-md">
                                     <CardContent className="p-6 flex flex-col items-center text-center gap-4">
                                         <div className="p-4 bg-muted rounded-full">
-                                            <UsersIcon className="h-16 w-16 text-muted-foreground" />
+                                            <UsersIcon className="h-12 w-12 text-muted-foreground" />
                                         </div>
                                         <div className="mt-2">
                                             <p className="font-semibold">{team.name}</p>
