@@ -70,7 +70,7 @@ export function Header() {
           <DropdownMenuSeparator />
           <DropdownMenuItem className="flex items-start gap-2 cursor-pointer">
             <Avatar className="h-8 w-8 border">
-              <AvatarImage src="https://placehold.co/32x32.png" alt="Maria Garcia" data-ai-hint="person portrait"/>
+              <AvatarImage src="/images/logo2.png"alt="Maria Garcia" data-ai-hint="person portrait"/>
               <AvatarFallback>MG</AvatarFallback>
             </Avatar>
             <div className="grid gap-1">
@@ -81,7 +81,7 @@ export function Header() {
            <DropdownMenuSeparator />
           <DropdownMenuItem className="flex items-start gap-2 cursor-pointer">
              <Avatar className="h-8 w-8 border">
-              <AvatarImage src="https://placehold.co/32x32.png" alt="James Smith" data-ai-hint="person portrait"/>
+              <AvatarImage src="/images/logo2.png" alt="James Smith" data-ai-hint="person portrait"/>
               <AvatarFallback>JS</AvatarFallback>
             </Avatar>
             <div className="grid gap-1">
