@@ -16,6 +16,7 @@ import { ProjectOverview } from '@/components/projects/project-overview';
 import { ProjectTasksList } from '@/components/projects/project-tasks-list';
 import { CalendarView } from '@/components/calendar/calendar-view';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function ProjectDetailsPage() {
     const params = useParams();
@@ -70,19 +71,21 @@ export default function ProjectDetailsPage() {
                         </CardHeader>
                         <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             {project.members.map(user => (
-                                <Card key={user.id} className="p-4 flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <Avatar className="h-10 w-10">
-                                            <AvatarImage src={user.avatarUrl} alt={user.name} />
-                                            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <p className="font-semibold">{user.name}</p>
-                                            <p className="text-sm text-muted-foreground">{user.role}</p>
+                                <Link key={user.id} href={`/people/${user.id}`} className="group">
+                                    <Card className="p-4 flex items-center justify-between h-full transition-all duration-200 group-hover:bg-accent group-hover:shadow-md">
+                                        <div className="flex items-center gap-4">
+                                            <Avatar className="h-10 w-10">
+                                                <AvatarImage src={user.avatarUrl} alt={user.name} />
+                                                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                            </Avatar>
+                                            <div>
+                                                <p className="font-semibold">{user.name}</p>
+                                                <p className="text-sm text-muted-foreground">{user.role}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    {userRole === 'admin' && <Button variant="outline" size="sm">Manage</Button>}
-                                </Card>
+                                        {userRole === 'admin' && <Button variant="outline" size="sm">Manage</Button>}
+                                    </Card>
+                                </Link>
                             ))}
                         </CardContent>
                     </Card>
