@@ -29,7 +29,7 @@ export function MainNav() {
       { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
       { href: "/admin/projects", label: "Projects", icon: FolderKanban },
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
-      { href: "/admin/people", label: "People", icon: Users },
+      { href: "/admin/teams", label: "Teams", icon: Users },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
   ];
 
@@ -38,7 +38,7 @@ export function MainNav() {
       { href: "/user/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/user/projects", label: "Projects", icon: FolderKanban },
       { href: "/user/tasks", label: "Tasks", icon: CheckSquare },
-      { href: "/user/people", label: "People", icon: Users },
+      { href: "/user/teams", label: "Teams", icon: Users },
       { href: "/user/calendar", label: "Calendar", icon: CalendarDays },
   ];
   
@@ -51,7 +51,6 @@ export function MainNav() {
   const navItems = isAdmin ? adminNavItems : userNavItems;
   const homePath = isAdmin ? '/admin/home' : '/user/home';
   const settingsPath = isAdmin ? '/admin/settings' : '/user/settings';
-  const projectsPath = isAdmin ? '/admin/projects' : '/user/projects';
 
   return (
     <div className="flex h-full flex-col">
@@ -71,7 +70,7 @@ export function MainNav() {
                       href={item.href}
                       className={cn(
                         "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                        (pathname === item.href || (item.href.includes(pathname) && pathname !== '/')) && "bg-accent text-primary font-semibold"
+                        (pathname.startsWith(item.href) && item.href !== '/admin/home' && item.href !== '/user/home') || pathname === item.href ? "bg-accent text-primary font-semibold" : ""
                       )}
                     >
                       <item.icon className="h-5 w-5" />
