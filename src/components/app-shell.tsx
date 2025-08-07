@@ -14,7 +14,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </Sidebar>
         <SidebarInset className="flex flex-col flex-1">
           <Header />
-          <main className="flex-1 overflow-y-auto p-6 md:p-8 mt-4">
+          <main className="flex-1 overflow-y-auto p-6 md:p-8">
             {children}
           </main>
            <footer className="shrink-0 border-t px-6 py-4">
