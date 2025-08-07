@@ -1,8 +1,19 @@
+
+"use client";
+
+import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { activities } from "@/lib/data";
 import { formatDistanceToNow } from 'date-fns';
+import { Skeleton } from '../ui/skeleton';
 
 export function RecentActivity() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="space-y-6">
       {activities.map((activity) => (
@@ -19,9 +30,13 @@ export function RecentActivity() {
               {" "}
               <span className="font-semibold text-foreground">{activity.target}</span>
             </p>
-            <p className="text-xs text-muted-foreground">
-              {formatDistanceToNow(activity.timestamp, { addSuffix: true })}
-            </p>
+            <div className="text-xs text-muted-foreground">
+              {isClient ? (
+                formatDistanceToNow(activity.timestamp, { addSuffix: true })
+              ) : (
+                <Skeleton className="h-4 w-20" />
+              )}
+            </div>
           </div>
         </div>
       ))}

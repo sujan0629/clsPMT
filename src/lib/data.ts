@@ -1,11 +1,66 @@
 
-import type { User, Project, Task, Activity } from "@/types";
+import type { User, Project, Task, Activity, Team } from "@/types";
 
 export const users: User[] = [
-  { id: "user-1", name: "Alex Johnson", avatarUrl: "https://placehold.co/32x32.png", role: "Admin" },
-  { id: "user-2", name: "Maria Garcia", avatarUrl: "https://placehold.co/32x32.png", role: "Manager" },
-  { id: "user-3", name: "James Smith", avatarUrl: "https://placehold.co/32x32.png", role: "Member" },
-  { id: "user-4", name: "Patricia Williams", avatarUrl: "https://placehold.co/32x32.png", role: "Member" },
+  { 
+    id: "user-1", 
+    name: "Alex Johnson", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Admin",
+    title: "Lead Developer",
+    email: "alex.johnson@clspmt.com",
+    department: "Engineering",
+    organization: "Codelits Studio",
+    location: "San Francisco, CA"
+  },
+  { 
+    id: "user-2", 
+    name: "Maria Garcia", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Manager",
+    title: "Project Manager",
+    email: "maria.garcia@clspmt.com",
+    department: "Product",
+    organization: "Codelits Studio",
+    location: "New York, NY"
+  },
+  { 
+    id: "user-3", 
+    name: "James Smith", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Member",
+    title: "UI/UX Designer",
+    email: "james.smith@clspmt.com",
+    department: "Design",
+    organization: "Codelits Studio",
+    location: "London, UK"
+  },
+  { 
+    id: "user-4", 
+    name: "Patricia Williams", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Member",
+    title: "Frontend Developer",
+    email: "patricia.williams@clspmt.com",
+    department: "Engineering",
+    organization: "Codelits Studio",
+    location: "Austin, TX"
+  },
+];
+
+export const teams: Team[] = [
+    {
+        id: "team-1",
+        name: "Engineering",
+        members: [users[0], users[3]],
+        description: "The core engineering team responsible for building and maintaining the product.",
+    },
+    {
+        id: "team-2",
+        name: "Product & Design",
+        members: [users[1], users[2]],
+        description: "The team responsible for product strategy, roadmapping, and user experience.",
+    }
 ];
 
 export const projects: Project[] = [
@@ -52,7 +107,10 @@ export const tasks: Task[] = [
       { id: "sub-1-1", title: "Wireframing", completed: true },
       { id: "sub-1-2", title: "Visual design", completed: false },
     ],
-    comments: [],
+    comments: [
+        { id: "comment-1", author: users[1], content: "Hey @James, how is the progress on this? The deadline is approaching.", timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000) },
+        { id: "comment-2", author: users[2], content: "@Maria, the wireframes are done. I'm starting on the visual design now. Should have a first draft by EOD tomorrow.", timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) },
+    ],
     attachments: [],
     projectId: "proj-1",
     projectName: "Website Redesign",

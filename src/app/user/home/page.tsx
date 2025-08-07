@@ -14,7 +14,7 @@ import { format } from 'date-fns';
 
 
 export default function HomePage() {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState<Date | null>(null);
 
     useEffect(() => {
         setDate(new Date());
@@ -28,7 +28,7 @@ export default function HomePage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Home</h1>
-                    <p className="text-muted-foreground mt-1">{format(date, "EEEE, MMMM d")}</p>
+                    {date && <p className="text-muted-foreground mt-1">{format(date, "EEEE, MMMM d")}</p>}
                 </div>
             </div>
 

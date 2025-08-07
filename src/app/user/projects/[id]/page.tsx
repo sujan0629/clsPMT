@@ -9,12 +9,24 @@ import { KanbanBoard } from '@/components/tasks/kanban-board';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
+import { ProjectOverview } from '@/components/projects/project-overview';
+import { ProjectTasksList } from '@/components/projects/project-tasks-list';
+import { CalendarView } from '@/components/calendar/calendar-view';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function ProjectDetailsPage() {
     const params = useParams();
     const projectId = params.id as string;
     const project = projects.find(p => p.id === projectId);
     const projectTasks = tasks.filter(t => t.projectId === projectId);
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setUserRole(sessionStorage.getItem('userRole'));
+        }
+    }, []);
 
     if (!project) {
         notFound();
@@ -26,26 +38,26 @@ export default function ProjectDetailsPage() {
             <Tabs defaultValue="overview">
                 <TabsList className="mb-4">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="tasks">Tasks ({projectTasks.length})</TabsTrigger>
+                    <TabsTrigger value="list">List</TabsTrigger>
+                    <TabsTrigger value="board">Board</TabsTrigger>
+                    <TabsTrigger value="calendar">Calendar</TabsTrigger>
                     <TabsTrigger value="team">Team ({project.members.length})</TabsTrigger>
                     <TabsTrigger value="activity">Activity</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="overview">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Project Overview</CardTitle>
-                            <CardDescription>A high-level view of the project's status and progress.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p>Project overview content goes here...</p>
-                        </CardContent>
-                    </Card>
+                    <ProjectOverview tasks={projectTasks} />
                 </TabsContent>
-                <TabsContent value="tasks">
+                 <TabsContent value="list">
+                    <ProjectTasksList tasks={projectTasks} isAdmin={userRole === 'admin'} />
+                </TabsContent>
+                <TabsContent value="board">
                      <div className="flex-1 overflow-x-auto">
                         <KanbanBoard tasks={projectTasks} />
                     </div>
+                </TabsContent>
+                 <TabsContent value="calendar">
+                    <CalendarView />
                 </TabsContent>
                 <TabsContent value="team">
                     <Card>
@@ -55,18 +67,20 @@ export default function ProjectDetailsPage() {
                         </CardHeader>
                         <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             {project.members.map(user => (
-                                <Card key={user.id} className="p-4 flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <Avatar className="h-10 w-10">
-                                            <AvatarImage src={user.avatarUrl} alt={user.name} />
-                                            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <p className="font-semibold">{user.name}</p>
-                                            <p className="text-sm text-muted-foreground">{user.role}</p>
+                                <Link key={user.id} href={`/people/${user.id}`} className="group">
+                                    <Card className="p-4 flex items-center justify-between h-full transition-all duration-200 group-hover:bg-accent group-hover:shadow-md">
+                                        <div className="flex items-center gap-4">
+                                            <Avatar className="h-10 w-10">
+                                                <AvatarImage src={user.avatarUrl} alt={user.name} />
+                                                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                            </Avatar>
+                                            <div>
+                                                <p className="font-semibold">{user.name}</p>
+                                                <p className="text-sm text-muted-foreground">{user.role}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Card>
+                                    </Card>
+                                </Link>
                             ))}
                         </CardContent>
                     </Card>

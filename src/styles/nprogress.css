@@ -1,0 +1,35 @@
+/* Make clicks pass-through */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: hsl(var(--primary));
+  position: fixed;
+  z-index: 1031;
+  top: 4rem;
+  left: 0;
+  width: 100%;
+  height: 3px;
+}
+
+/* The loading bar path/track */
+#nprogress::before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: hsl(var(--primary) / 0.2);
+  z-index: 1030;
+}
+
+
+@media (min-width: 768px) {
+  #nprogress .bar, #nprogress::before {
+    left: 280px;
+    width: calc(100% - 280px);
+  }
+}

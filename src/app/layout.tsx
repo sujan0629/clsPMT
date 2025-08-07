@@ -1,10 +1,12 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/styles/nprogress.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ConditionalLayout } from "./conditional-layout";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
+import { NextTopLoader } from "@/components/ui/next-top-loader";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -33,6 +35,7 @@ export default function RootLayout({
         "min-h-screen bg-background font-sans antialiased",
         fontSans.variable
       )}>
+        <NextTopLoader />
         <ConditionalLayout>
           {children}
         </ConditionalLayout>

@@ -4,6 +4,11 @@ export type User = {
   name: string;
   avatarUrl: string;
   role: "Admin" | "Manager" | "Member";
+  title?: string;
+  email?: string;
+  department?: string;
+  organization?: string;
+  location?: string;
 };
 
 export type TaskStatus = "To Do" | "In Progress" | "On Hold" | "Done";
@@ -68,4 +73,9 @@ export type Activity = {
     timestamp: Date;
 };
 
-    
+export type Team = {
+  id: string;
+  name: string;
+  members: User[];
+  description?: string;
+};
