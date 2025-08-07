@@ -61,13 +61,13 @@ export function MainNav() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-16 items-center justify-center border-b px-4 shrink-0">
+      <div className="flex h-16 shrink-0 items-center justify-center border-b px-4">
         <Link href={homePath} className="flex items-center gap-2 font-semibold">
           <Shapes className="h-6 w-6 text-primary" />
           <span className="hidden lg:block">clsPMT™</span>
         </Link>
       </div>
-      <nav className="flex-1 space-y-1 p-2 overflow-y-auto">
+      <nav className="flex-1 space-y-1 overflow-y-auto p-2">
         <TooltipProvider>
             {navItems.map((item) => (
               <Tooltip key={item.href} delayDuration={0}>
@@ -193,7 +193,7 @@ export function MainNav() {
             </Accordion>
         </TooltipProvider>
       </nav>
-      <div className="mt-auto p-2 border-t">
+      <div className="mt-auto border-t p-2">
         <TooltipProvider>
             <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
