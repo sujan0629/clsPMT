@@ -2,10 +2,50 @@
 import type { User, Project, Task, Activity } from "@/types";
 
 export const users: User[] = [
-  { id: "user-1", name: "Alex Johnson", avatarUrl: "https://placehold.co/32x32.png", role: "Admin" },
-  { id: "user-2", name: "Maria Garcia", avatarUrl: "https://placehold.co/32x32.png", role: "Manager" },
-  { id: "user-3", name: "James Smith", avatarUrl: "https://placehold.co/32x32.png", role: "Member" },
-  { id: "user-4", name: "Patricia Williams", avatarUrl: "https://placehold.co/32x32.png", role: "Member" },
+  { 
+    id: "user-1", 
+    name: "Alex Johnson", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Admin",
+    title: "Lead Developer",
+    email: "alex.johnson@clspmt.com",
+    department: "Engineering",
+    organization: "Codelits Studio",
+    location: "San Francisco, CA"
+  },
+  { 
+    id: "user-2", 
+    name: "Maria Garcia", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Manager",
+    title: "Project Manager",
+    email: "maria.garcia@clspmt.com",
+    department: "Product",
+    organization: "Codelits Studio",
+    location: "New York, NY"
+  },
+  { 
+    id: "user-3", 
+    name: "James Smith", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Member",
+    title: "UI/UX Designer",
+    email: "james.smith@clspmt.com",
+    department: "Design",
+    organization: "Codelits Studio",
+    location: "London, UK"
+  },
+  { 
+    id: "user-4", 
+    name: "Patricia Williams", 
+    avatarUrl: "https://placehold.co/100x100.png", 
+    role: "Member",
+    title: "Frontend Developer",
+    email: "patricia.williams@clspmt.com",
+    department: "Engineering",
+    organization: "Codelits Studio",
+    location: "Austin, TX"
+  },
 ];
 
 export const projects: Project[] = [

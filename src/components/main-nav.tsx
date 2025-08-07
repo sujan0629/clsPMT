@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban, BarChart3, ClipboardList } from "lucide-react";
+import { Bot, CalendarDays, CheckSquare, Home, LayoutDashboard, Settings, Shapes, FolderKanban, BarChart3, ClipboardList, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
@@ -27,14 +27,18 @@ export function MainNav() {
       { href: "/admin/home", label: "Home", icon: Home },
       { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+      { href: "/admin/projects", label: "Projects", icon: FolderKanban },
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
+      { href: "/admin/people", label: "People", icon: Users },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
   ];
 
   const userNavItems = [
       { href: "/user/home", label: "Home", icon: Home },
       { href: "/user/dashboard", label: "Dashboard", icon: LayoutDashboard },
+      { href: "/user/projects", label: "Projects", icon: FolderKanban },
       { href: "/user/tasks", label: "Tasks", icon: CheckSquare },
+      { href: "/user/people", label: "People", icon: Users },
       { href: "/user/calendar", label: "Calendar", icon: CalendarDays },
   ];
   
@@ -57,66 +61,31 @@ export function MainNav() {
           <span className="hidden lg:block">clsPMT™</span>
         </Link>
       </div>
-      <nav className="flex-1 space-y-2 p-2">
+      <nav className="flex-1 space-y-1 p-2">
         <TooltipProvider>
             {navItems.map((item) => (
-                <Tooltip key={item.href} delayDuration={0}>
-                    <TooltipTrigger asChild>
-                        <span>
-                            <Link
-                                href={item.href}
-                                className={cn(
-                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                                    pathname === item.href && "bg-accent text-primary font-semibold"
-                                )}
-                                >
-                                <item.icon className="h-5 w-5" />
-                                <span className="hidden lg:inline">{item.label}</span>
-                            </Link>
-                        </span>
-                    </TooltipTrigger>
-                    <TooltipContent side="right" className="block lg:hidden">
-                        <p>{item.label}</p>
-                    </TooltipContent>
-                </Tooltip>
+              <Tooltip key={item.href} delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <span>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                        (pathname === item.href || (item.href.includes(pathname) && pathname !== '/')) && "bg-accent text-primary font-semibold"
+                      )}
+                    >
+                      <item.icon className="h-5 w-5" />
+                      <span className="hidden lg:inline">{item.label}</span>
+                    </Link>
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="block lg:hidden">
+                  <p>{item.label}</p>
+                </TooltipContent>
+              </Tooltip>
             ))}
 
-             <Accordion type="single" collapsible defaultValue={pathname.includes('/projects/') ? "projects" : ""} className="space-y-2">
-                <AccordionItem value="projects" className="border-b-0">
-                    <Tooltip delayDuration={0}>
-                        <TooltipTrigger asChild>
-                            <span className="w-full">
-                                <AccordionTrigger className={cn(
-                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
-                                    pathname.startsWith(projectsPath) && !pathname.startsWith('/admin/home') && "bg-accent text-primary font-semibold",
-                                    "hover:no-underline font-normal text-base w-full"
-                                )}>
-                                    <Link href={projectsPath} className="flex items-center gap-3">
-                                        <FolderKanban className="h-5 w-5" />
-                                        <span className="hidden lg:inline">Projects</span>
-                                    </Link>
-                                </AccordionTrigger>
-                            </span>
-                        </TooltipTrigger>
-                         <TooltipContent side="right" className="block lg:hidden">
-                            <p>Projects</p>
-                        </TooltipContent>
-                    </Tooltip>
-                    <AccordionContent className="pl-8 pr-2 hidden lg:block">
-                        <nav className="grid gap-1 pt-2">
-                        {projects.map(project => (
-                             <Link key={project.id} href={`${projectsPath}/${project.id}`} className={cn(
-                                "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
-                                pathname === `${projectsPath}/${project.id}` && "bg-accent text-primary font-medium"
-                             )}>
-                                {project.name}
-                             </Link>
-                        ))}
-                        </nav>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-             <Accordion type="single" collapsible defaultValue={pathname.startsWith('/ai-') ? "ai-tools" : ""} className="space-y-2">
+             <Accordion type="single" collapsible defaultValue={pathname.startsWith('/ai-') ? "ai-tools" : ""} className="space-y-1">
                 <AccordionItem value="ai-tools" className="border-b-0">
                     <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
@@ -138,7 +107,7 @@ export function MainNav() {
                         </TooltipContent>
                     </Tooltip>
                     <AccordionContent className="pl-8 pr-2 hidden lg:block">
-                        <nav className="grid gap-1 pt-2">
+                        <nav className="grid gap-1 pt-1">
                         {aiNavItems.map(item => (
                              <Link key={item.href} href={item.href} className={cn(
                                 "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
