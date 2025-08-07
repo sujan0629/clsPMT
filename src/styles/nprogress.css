@@ -27,3 +27,10 @@
       -ms-transform: rotate(3deg) translate(0px, -4px);
           transform: rotate(3deg) translate(0px, -4px);
 }
+
+@media (min-width: 768px) {
+  #nprogress .bar {
+    left: 280px;
+    width: calc(100% - 280px);
+  }
+}
