@@ -27,7 +27,9 @@ export function MainNav() {
       { href: "/admin/home", label: "Home", icon: Home },
       { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
-      { href: "/admin/projects", label: "Projects", icon: FolderKanban },
+  ];
+  
+  const adminBottomNavItems = [
       { href: "/admin/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/admin/teams", label: "Teams", icon: Users },
       { href: "/admin/calendar", label: "Calendar", icon: CalendarDays },
@@ -36,11 +38,14 @@ export function MainNav() {
   const userNavItems = [
       { href: "/user/home", label: "Home", icon: Home },
       { href: "/user/dashboard", label: "Dashboard", icon: LayoutDashboard },
-      { href: "/user/projects", label: "Projects", icon: FolderKanban },
+  ];
+
+   const userBottomNavItems = [
       { href: "/user/tasks", label: "Tasks", icon: CheckSquare },
       { href: "/user/teams", label: "Teams", icon: Users },
       { href: "/user/calendar", label: "Calendar", icon: CalendarDays },
   ];
+
   
   const aiNavItems = [
       { href: "/ai-prioritizer", label: "Task Prioritizer", icon: Bot },
@@ -49,8 +54,10 @@ export function MainNav() {
 
 
   const navItems = isAdmin ? adminNavItems : userNavItems;
+  const bottomNavItems = isAdmin ? adminBottomNavItems : userBottomNavItems;
   const homePath = isAdmin ? '/admin/home' : '/user/home';
   const settingsPath = isAdmin ? '/admin/settings' : '/user/settings';
+  const projectsPath = isAdmin ? '/admin/projects' : '/user/projects';
 
   return (
     <div className="flex h-full flex-col">
@@ -71,6 +78,70 @@ export function MainNav() {
                       className={cn(
                         "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
                         (pathname.startsWith(item.href) && item.href !== '/admin/home' && item.href !== '/user/home') || pathname === item.href ? "bg-accent text-primary font-semibold" : ""
+                      )}
+                    >
+                      <item.icon className="h-5 w-5" />
+                      <span className="hidden lg:inline">{item.label}</span>
+                    </Link>
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="block lg:hidden">
+                  <p>{item.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+
+            <Accordion type="single" collapsible defaultValue={pathname.startsWith(projectsPath) ? "projects" : ""}>
+                <AccordionItem value="projects" className="border-b-0">
+                    <Tooltip delayDuration={0}>
+                        <TooltipTrigger asChild>
+                            <span className="w-full">
+                                <AccordionTrigger className={cn(
+                                    "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                                    pathname.startsWith(projectsPath) && "bg-accent text-primary font-semibold",
+                                    "hover:no-underline font-normal text-base w-full"
+                                )}>
+                                    <div className="flex items-center gap-3">
+                                        <FolderKanban className="h-5 w-5" />
+                                        <span className="hidden lg:inline">Projects</span>
+                                    </div>
+                                </AccordionTrigger>
+                            </span>
+                        </TooltipTrigger>
+                         <TooltipContent side="right" className="block lg:hidden">
+                            <p>Projects</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <AccordionContent className="pl-8 pr-2 hidden lg:block">
+                        <nav className="grid gap-1 pt-1">
+                        {projects.slice(0,5).map(project => (
+                             <Link key={project.id} href={`${projectsPath}/${project.id}`} className={cn(
+                                "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-primary",
+                                pathname === `${projectsPath}/${project.id}` && "bg-accent text-primary font-medium"
+                             )}>
+                                <div className="h-2 w-2 rounded-full bg-primary/50"/>
+                                {project.name}
+                             </Link>
+                        ))}
+                         <Link href={projectsPath} className={cn(
+                            "flex items-center gap-3 rounded-md px-3 py-1.5 text-sm text-muted-foreground font-medium hover:bg-accent hover:text-primary mt-1"
+                         )}>
+                            View all projects
+                         </Link>
+                        </nav>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+            
+            {bottomNavItems.map((item) => (
+              <Tooltip key={item.href} delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <span>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "flex items-center justify-center lg:justify-start gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent",
+                        pathname.startsWith(item.href) ? "bg-accent text-primary font-semibold" : ""
                       )}
                     >
                       <item.icon className="h-5 w-5" />
