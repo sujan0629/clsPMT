@@ -34,7 +34,7 @@ export function Header() {
   }
 
   return (
-    <header className="flex h-16 items-center gap-4 border-b bg-card px-6 shrink-0 mb-4">
+    <header className="flex h-16 items-center gap-4 border-b bg-card px-6 shrink-0">
       <div className="flex items-center gap-4 md:hidden">
         <SidebarTrigger />
         <Link href={homePath} className="flex items-center gap-2 font-semibold md:hidden">
