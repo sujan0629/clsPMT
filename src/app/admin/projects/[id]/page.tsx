@@ -12,6 +12,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ProjectOverview } from '@/components/projects/project-overview';
+import { ProjectTasksList } from '@/components/projects/project-tasks-list';
+import { CalendarView } from '@/components/calendar/calendar-view';
 
 export default function ProjectDetailsPage() {
     const params = useParams();
@@ -29,27 +32,27 @@ export default function ProjectDetailsPage() {
             <Tabs defaultValue="overview">
                 <TabsList className="mb-4">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="tasks">Tasks ({projectTasks.length})</TabsTrigger>
+                    <TabsTrigger value="list">List</TabsTrigger>
+                    <TabsTrigger value="board">Board</TabsTrigger>
+                    <TabsTrigger value="calendar">Calendar</TabsTrigger>
                     <TabsTrigger value="team">Team ({project.members.length})</TabsTrigger>
                     <TabsTrigger value="activity">Activity</TabsTrigger>
                     <TabsTrigger value="settings">Settings</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="overview">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Project Overview</CardTitle>
-                            <CardDescription>A high-level view of the project's status and progress.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p>Project overview content goes here...</p>
-                        </CardContent>
-                    </Card>
+                    <ProjectOverview tasks={projectTasks} />
                 </TabsContent>
-                <TabsContent value="tasks">
+                 <TabsContent value="list">
+                    <ProjectTasksList tasks={projectTasks} />
+                </TabsContent>
+                <TabsContent value="board">
                      <div className="flex-1 overflow-x-auto">
                         <KanbanBoard tasks={projectTasks} />
                     </div>
+                </TabsContent>
+                 <TabsContent value="calendar">
+                    <CalendarView />
                 </TabsContent>
                 <TabsContent value="team">
                     <Card>
