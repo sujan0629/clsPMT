@@ -43,7 +43,7 @@ export function TeamDirectory() {
                         {filteredUsers.map(user => (
                              <Link key={user.id} href={`/people/${user.id}`} className="group">
                                 <Card className="h-full transition-all duration-200 group-hover:bg-accent group-hover:shadow-md">
-                                    <CardContent className="p-6 flex flex-col items-center text-center gap-4">
+                                    <CardContent className="p-6 flex flex-col items-center justify-center text-center gap-4 h-full">
                                         <Avatar className="h-24 w-24 border-2 border-primary/20">
                                             <AvatarImage src={user.avatarUrl} alt={user.name} />
                                             <AvatarFallback>{user.name.substring(0, 2)}</AvatarFallback>
