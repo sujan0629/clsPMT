@@ -63,8 +63,8 @@ export function TeamDirectory() {
                              <Link key={team.id} href={`/teams/${team.id}`} className="group">
                                 <Card className="h-full transition-all duration-200 group-hover:bg-accent group-hover:shadow-md">
                                     <CardContent className="p-6 flex flex-col items-center text-center gap-4">
-                                        <div className="p-3 bg-muted rounded-full">
-                                            <UsersIcon className="h-6 w-6 text-muted-foreground" />
+                                        <div className="p-2 bg-muted rounded-full">
+                                            <UsersIcon className="h-4 w-4 text-muted-foreground" />
                                         </div>
                                         <div className="mt-2">
                                             <p className="font-semibold">{team.name}</p>
