@@ -15,12 +15,20 @@ import { Label } from '@/components/ui/label';
 import { ProjectOverview } from '@/components/projects/project-overview';
 import { ProjectTasksList } from '@/components/projects/project-tasks-list';
 import { CalendarView } from '@/components/calendar/calendar-view';
+import { useEffect, useState } from 'react';
 
 export default function ProjectDetailsPage() {
     const params = useParams();
     const projectId = params.id as string;
     const project = projects.find(p => p.id === projectId);
     const projectTasks = tasks.filter(t => t.projectId === projectId);
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setUserRole(sessionStorage.getItem('userRole'));
+        }
+    }, []);
 
     if (!project) {
         notFound();
@@ -37,14 +45,14 @@ export default function ProjectDetailsPage() {
                     <TabsTrigger value="calendar">Calendar</TabsTrigger>
                     <TabsTrigger value="team">Team ({project.members.length})</TabsTrigger>
                     <TabsTrigger value="activity">Activity</TabsTrigger>
-                    <TabsTrigger value="settings">Settings</TabsTrigger>
+                    {userRole === 'admin' && <TabsTrigger value="settings">Settings</TabsTrigger>}
                 </TabsList>
 
                 <TabsContent value="overview">
                     <ProjectOverview tasks={projectTasks} />
                 </TabsContent>
                  <TabsContent value="list">
-                    <ProjectTasksList tasks={projectTasks} />
+                    <ProjectTasksList tasks={projectTasks} isAdmin={userRole === 'admin'} />
                 </TabsContent>
                 <TabsContent value="board">
                      <div className="flex-1 overflow-x-auto">
@@ -73,7 +81,7 @@ export default function ProjectDetailsPage() {
                                             <p className="text-sm text-muted-foreground">{user.role}</p>
                                         </div>
                                     </div>
-                                    <Button variant="outline" size="sm">Manage</Button>
+                                    {userRole === 'admin' && <Button variant="outline" size="sm">Manage</Button>}
                                 </Card>
                             ))}
                         </CardContent>
@@ -90,31 +98,33 @@ export default function ProjectDetailsPage() {
                         </CardContent>
                     </Card>
                 </TabsContent>
-                <TabsContent value="settings">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Project Settings</CardTitle>
-                            <CardDescription>Manage your project settings and preferences.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="space-y-2">
-                                <Label htmlFor="projectName">Project Name</Label>
-                                <Input id="projectName" defaultValue={project.name} />
-                            </div>
-                            <Button>Save Changes</Button>
-                            <div className="border-t pt-6 border-destructive/50">
-                                <h4 className="text-lg font-semibold text-destructive mb-2">Danger Zone</h4>
-                                <p className="text-sm text-muted-foreground mb-4">
-                                    Archiving or deleting a project is a permanent action and cannot be undone.
-                                </p>
-                                <div className="flex gap-2">
-                                    <Button variant="outline">Archive Project</Button>
-                                    <Button variant="destructive">Delete Project</Button>
+                {userRole === 'admin' && (
+                    <TabsContent value="settings">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Project Settings</CardTitle>
+                                <CardDescription>Manage your project settings and preferences.</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                <div className="space-y-2">
+                                    <Label htmlFor="projectName">Project Name</Label>
+                                    <Input id="projectName" defaultValue={project.name} />
                                 </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </TabsContent>
+                                <Button>Save Changes</Button>
+                                <div className="border-t pt-6 border-destructive/50">
+                                    <h4 className="text-lg font-semibold text-destructive mb-2">Danger Zone</h4>
+                                    <p className="text-sm text-muted-foreground mb-4">
+                                        Archiving or deleting a project is a permanent action and cannot be undone.
+                                    </p>
+                                    <div className="flex gap-2">
+                                        <Button variant="outline">Archive Project</Button>
+                                        <Button variant="destructive">Delete Project</Button>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                )}
             </Tabs>
         </div>
     );

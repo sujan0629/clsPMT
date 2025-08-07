@@ -12,12 +12,20 @@ import { RecentActivity } from '@/components/dashboard/recent-activity';
 import { ProjectOverview } from '@/components/projects/project-overview';
 import { ProjectTasksList } from '@/components/projects/project-tasks-list';
 import { CalendarView } from '@/components/calendar/calendar-view';
+import { useEffect, useState } from 'react';
 
 export default function ProjectDetailsPage() {
     const params = useParams();
     const projectId = params.id as string;
     const project = projects.find(p => p.id === projectId);
     const projectTasks = tasks.filter(t => t.projectId === projectId);
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setUserRole(sessionStorage.getItem('userRole'));
+        }
+    }, []);
 
     if (!project) {
         notFound();
@@ -40,7 +48,7 @@ export default function ProjectDetailsPage() {
                     <ProjectOverview tasks={projectTasks} />
                 </TabsContent>
                  <TabsContent value="list">
-                    <ProjectTasksList tasks={projectTasks} />
+                    <ProjectTasksList tasks={projectTasks} isAdmin={userRole === 'admin'} />
                 </TabsContent>
                 <TabsContent value="board">
                      <div className="flex-1 overflow-x-auto">
