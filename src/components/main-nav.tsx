@@ -67,7 +67,7 @@ export function MainNav() {
           <span className="hidden lg:block">clsPMT™</span>
         </Link>
       </div>
-      <nav className="flex-1 space-y-1 p-2">
+      <nav className="flex-1 space-y-1 p-2 overflow-y-auto">
         <TooltipProvider>
             {navItems.map((item) => (
               <Tooltip key={item.href} delayDuration={0}>
