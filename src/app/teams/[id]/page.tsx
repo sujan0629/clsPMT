@@ -29,17 +29,15 @@ export default function TeamDetailsPage() {
                     className="rounded-lg"
                     data-ai-hint="abstract workspace"
                  />
-                 <div className="absolute -bottom-12 left-8 flex items-center gap-4">
-                     <div className="p-4 bg-background rounded-lg border-4 border-background shadow-lg">
-                        <Users className="h-16 w-16 text-muted-foreground" />
-                     </div>
-                 </div>
             </div>
 
-            <div className="pt-14 px-8 flex justify-between items-start">
-                <div>
-                    <h1 className="text-3xl font-bold">{team.name}</h1>
-                    <p className="text-muted-foreground">A team at Codelits Studio.</p>
+            <div className="pt-8 px-8 flex justify-between items-start">
+                <div className="flex items-center gap-4">
+                    <Users className="h-10 w-10 text-primary" />
+                    <div>
+                        <h1 className="text-3xl font-bold">{team.name}</h1>
+                        <p className="text-muted-foreground">A team at Codelits Studio.</p>
+                    </div>
                 </div>
                 <Button>
                     <PlusCircle className="mr-2 h-4 w-4" />
