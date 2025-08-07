@@ -72,3 +72,10 @@ export type Activity = {
     target: string;
     timestamp: Date;
 };
+
+export type Team = {
+  id: string;
+  name: string;
+  members: User[];
+  description?: string;
+};

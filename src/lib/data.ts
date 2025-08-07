@@ -1,5 +1,5 @@
 
-import type { User, Project, Task, Activity } from "@/types";
+import type { User, Project, Task, Activity, Team } from "@/types";
 
 export const users: User[] = [
   { 
@@ -46,6 +46,21 @@ export const users: User[] = [
     organization: "Codelits Studio",
     location: "Austin, TX"
   },
+];
+
+export const teams: Team[] = [
+    {
+        id: "team-1",
+        name: "Engineering",
+        members: [users[0], users[3]],
+        description: "The core engineering team responsible for building and maintaining the product.",
+    },
+    {
+        id: "team-2",
+        name: "Product & Design",
+        members: [users[1], users[2]],
+        description: "The team responsible for product strategy, roadmapping, and user experience.",
+    }
 ];
 
 export const projects: Project[] = [

@@ -2,6 +2,7 @@
 import { TeamDirectory } from "@/components/teams/directory";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function TeamsPage() {
     return (
@@ -12,10 +13,11 @@ export default function TeamsPage() {
                     <p className="text-muted-foreground mt-1">Manage users and organize them into teams.</p>
                 </div>
                 <div className="flex gap-2">
-                    <Button variant="outline">Create Team</Button>
-                    <Button>
+                    <Button asChild>
+                      <Link href="/admin/teams/new">
                         <PlusCircle className="mr-2 h-4 w-4" />
-                        Add People
+                        Create Team
+                      </Link>
                     </Button>
                 </div>
             </div>

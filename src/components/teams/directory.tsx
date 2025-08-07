@@ -2,13 +2,14 @@
 "use client";
 
 import { useState } from "react";
-import { users } from "@/lib/data";
+import { users, teams } from "@/lib/data";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { Users as UsersIcon } from "lucide-react";
 
 
 export function TeamDirectory() {
@@ -17,6 +18,9 @@ export function TeamDirectory() {
     const filteredUsers = users.filter(user => 
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.role.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+     const filteredTeams = teams.filter(team => 
+        team.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -29,7 +33,7 @@ export function TeamDirectory() {
                     </TabsList>
                     <div className="w-full max-w-sm">
                         <Input 
-                            placeholder="Search people..." 
+                            placeholder="Search people or teams..." 
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -55,8 +59,22 @@ export function TeamDirectory() {
                     </div>
                 </TabsContent>
                 <TabsContent value="teams">
-                    <div className="text-center py-16">
-                        <p className="text-muted-foreground">Team management is coming soon.</p>
+                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        {filteredTeams.map(team => (
+                             <Link key={team.id} href={`/teams/${team.id}`} className="group">
+                                <Card className="h-full transition-all duration-200 group-hover:bg-accent group-hover:shadow-md">
+                                    <CardContent className="p-6 flex flex-col items-center text-center gap-4">
+                                        <div className="p-4 bg-muted rounded-full">
+                                            <UsersIcon className="h-16 w-16 text-muted-foreground" />
+                                        </div>
+                                        <div className="mt-2">
+                                            <p className="font-semibold">{team.name}</p>
+                                            <p className="text-sm text-muted-foreground">{team.members.length} members</p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
+                        ))}
                     </div>
                 </TabsContent>
             </Tabs>
