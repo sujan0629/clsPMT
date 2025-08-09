@@ -83,3 +83,7 @@ body {
     font-size: 0.7rem;
   }
 }
+.image-wrapper img {
+  border-radius: 1rem; /* equals rounded-xl */
+  display: block;
+}

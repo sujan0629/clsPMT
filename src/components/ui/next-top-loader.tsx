@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect } from "react";
@@ -9,13 +8,18 @@ export function NextTopLoader() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    NProgress.done();
-  }, [pathname, searchParams]);
+  // List of paths to skip
+  const blockedPaths = ["/", "/user/login", "/admin/login"];
+  const isBlocked = blockedPaths.includes(pathname);
 
   useEffect(() => {
-    // This is needed to listen to navigation events, which NProgress needs.
-    // The actual start/done logic is handled in the effect above.
+    if (isBlocked) return;
+    NProgress.done();
+  }, [pathname, searchParams, isBlocked]);
+
+  useEffect(() => {
+    if (isBlocked) return;
+
     const handleAnchorClick = (event: MouseEvent) => {
       const targetUrl = (event.currentTarget as HTMLAnchorElement).href;
       const currentUrl = window.location.href;
@@ -34,14 +38,12 @@ export function NextTopLoader() {
     const mutationObserver = new MutationObserver(handleMutation);
     mutationObserver.observe(document, { childList: true, subtree: true });
 
-    // Initial listener attachment
-    handleMutation([]);
+    handleMutation([], mutationObserver);
 
     return () => {
-        mutationObserver.disconnect();
-    }
-
-  }, []);
+      mutationObserver.disconnect();
+    };
+  }, [isBlocked]);
 
   return null;
 }

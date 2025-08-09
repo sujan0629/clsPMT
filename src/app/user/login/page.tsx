@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState } from 'react';
@@ -7,40 +8,50 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Shapes, AlertTriangle } from 'lucide-react';
+import { Shapes, AlertTriangle, User as UserIcon } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Image from 'next/image';
 
-export default function AdminLoginPage() {
+export default function UserLoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = () => {
-    if (username === 'adminclspmt' && password === 'fRuits123!') {
+    if (username === 'userclspmt' && password === 'fRuits1!') {
       setError('');
       if (typeof window !== 'undefined') {
-        sessionStorage.setItem('userRole', 'admin');
+        sessionStorage.setItem('userRole', 'user');
       }
-      router.push('/admin/home');
+      router.push('/user/home');
     } else {
       setError('Invalid username or password.');
     }
   };
 
   return (
-    <div className="w-full bg-[#0A0A0A] lg:grid lg:min-h-screen lg:grid-cols-2">
-      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
+        <div className="hidden lg:flex justify-center items-center bg-[#101010] w-full">
+         <Image
+           src="/images/logo.png"
+           alt="Admin dashboard graphic"
+           width={1920}
+           height={1080}
+           className="h-96 w-96 bg-transparent object-cover dark:brightness-[0.3] dark:grayscale"
+           data-ai-hint="abstract security"
+         />
+       </div>
+      <div className="flex items-center bg-[#0A0A0A] justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
              <div className="flex justify-center items-center gap-2 mb-4">
               <Shapes className="h-8 w-8 text-primary" />
               <h1 className="text-3xl font-bold">clsPMT™</h1>
             </div>
-            <h2 className="text-2xl font-bold">Admin Login</h2>
+            <h2 className="text-2xl font-bold">User Login</h2>
             <p className="text-balance text-muted-foreground">
-              Enter your administrator credentials to access the dashboard.
+              Enter your credentials to access your projects and tasks.
             </p>
           </div>
            {error && (
@@ -55,7 +66,7 @@ export default function AdminLoginPage() {
               <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
-                placeholder="admin_username"
+                placeholder="userclspmt"
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -64,6 +75,12 @@ export default function AdminLoginPage() {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
+                 <Link
+                  href="/forgot-password"
+                  className="ml-auto inline-block text-sm underline"
+                >
+                  Forgot your password?
+                </Link>
               </div>
               <Input 
                 id="password" 
@@ -76,26 +93,16 @@ export default function AdminLoginPage() {
             <Button type="button" className="w-full" onClick={handleLogin}>
               Login
             </Button>
+             <div className="text-center text-sm">
+                Don't have an account?{" "}
+                <Link href="/register" className="underline">
+                    Sign Up
+                </Link>
+            </div>
           </div>
-          <div className="mt-4 text-center text-sm">
-            Not an admin?{" "}
-            <Link href="/user/login" className="underline">
-              User Login
-            </Link>
-          </div>
+       
         </div>
       </div>
-      <div className="hidden lg:flex justify-center items-center bg-[#101010] w-full">
-  <Image
-    src="/images/logo.png"
-    alt="Admin dashboard graphic"
-    width={1920}
-    height={1080}
-    className="h-96 w-96 bg-transparent object-cover dark:brightness-[0.3] dark:grayscale"
-    data-ai-hint="abstract security"
-  />
-</div>
-
     </div>
   );
 }
